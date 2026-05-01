@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faculty AI Readiness Inventory | AI Literacy Training | Salem Community College</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+  :root {
+    --scc-green:   #016450;
+    --scc-green-dk:#014a3c;
+    --scc-green-lt:#e8f4f1;
+    --scc-green-mid:#c2ddd8;
+    --black:       #000000;
+    --dark-gray:   #B2B2B2;
+    --light-gray:  #D9D9D9;
+    --off-white:   #F7F7F7;
+    --white:       #FFFFFF;
+    --text:        #1a1a1a;
+    --text-muted:  #555555;
+    --radius:      6px;
+    --transition:  0.2s ease;
+    --amber:       #7a5a00;
+    --amber-lt:    #fff3cd;
+    --amber-border:#ffc107;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--text);
+    background: var(--off-white);
+  }
+
+  .skip-link {
+    position: absolute; top: -9999px; left: 1rem;
+    background: var(--scc-green); color: var(--white);
+    padding: 0.5rem 1rem; border-radius: var(--radius);
+    font-weight: 700; z-index: 9999; text-decoration: none;
+  }
+  .skip-link:focus { top: 1rem; }
+
+  .site-header {
+    background: var(--scc-green);
+    color: var(--white);
+    padding: 1.25rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .site-header .wordmark {
+    font-size: 0.8rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.85;
+  }
+  .site-header .separator {
+    width: 1px; height: 1.5rem; background: rgba(255,255,255,0.4);
+  }
+  .site-header .course-label {
+    font-size: 0.8rem; opacity: 0.75; letter-spacing: 0.04em;
+  }
+  .site-header .faculty-badge {
+    margin-left: auto;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 99px;
+    padding: 0.25rem 0.75rem;
+    color: rgba(255,255,255,0.9);
+  }
+
+  main { max-width: 780px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+
+  .progress-bar-wrap {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--off-white);
+    padding: 0.6rem 0 0.4rem;
+    margin-bottom: 2rem;
+  }
+  .progress-track {
+    height: 5px; background: var(--light-gray); border-radius: 99px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; background: var(--scc-green); border-radius: 99px;
+    width: 0%; transition: width 0.4s ease;
+  }
+  .progress-label {
+    font-size: 0.75rem; color: var(--text-muted);
+    text-align: right; margin-top: 0.3rem; letter-spacing: 0.02em;
+  }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .hero {
+    border-left: 5px solid var(--scc-green);
+    padding: 1.5rem 1.75rem;
+    background: var(--white);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin-bottom: 2rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  }
+  .hero-eyebrow {
+    font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--scc-green); font-weight: 700; margin-bottom: 0.5rem;
+  }
+  .hero h1 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.75rem; font-weight: 700; line-height: 1.2;
+    color: var(--black); margin-bottom: 0.75rem;
+  }
+  .hero p { color: var(--text-muted); font-size: 0.95rem; }
+
+  .section-header { margin-bottom: 1.5rem; }
+  .section-num {
+    font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--scc-green); font-weight: 700; margin-bottom: 0.3rem;
+  }
+  .section-header h2 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.4rem; font-weight: 700; color: var(--black); margin-bottom: 0.5rem;
+  }
+  .section-header p { color: var(--text-muted); font-size: 0.93rem; }
+
+  .framework-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  @media (max-width: 560px) { .framework-grid { grid-template-columns: 1fr; } }
+
+  .framework-card {
+    background: var(--white);
+    border: 1.5px solid var(--light-gray);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.25rem;
+    position: relative;
+    transition: border-color var(--transition), box-shadow var(--transition);
+  }
+  .framework-card:hover {
+    border-color: var(--scc-green);
+    box-shadow: 0 2px 10px rgba(1,100,80,0.1);
+  }
+  .framework-card .card-num {
+    position: absolute; top: 1rem; right: 1rem;
+    font-size: 1.6rem; font-weight: 800; color: var(--light-gray); line-height: 1;
+  }
+  .framework-card h3 {
+    font-size: 0.9rem; font-weight: 700; color: var(--scc-green);
+    margin-bottom: 0.35rem; padding-right: 2rem;
+  }
+  .framework-card p {
+    font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.5rem;
+  }
+  .framework-card .course-link {
+    font-size: 0.78rem; color: var(--scc-green); font-weight: 700; font-style: italic;
+  }
+
+  .callout {
+    background: var(--scc-green-lt);
+    border-left: 4px solid var(--scc-green);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 1rem 1.25rem;
+    font-size: 0.9rem; color: var(--scc-green-dk);
+    margin-top: 1rem; font-weight: 600;
+  }
+
+  .inventory-list { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem; }
+  .inventory-item {
+    background: var(--white); border: 1.5px solid var(--light-gray);
+    border-radius: var(--radius); padding: 1.1rem 1.25rem;
+    transition: border-color var(--transition);
+  }
+  .inventory-item.answered { border-color: var(--scc-green); }
+  .inventory-item .item-text {
+    font-size: 0.95rem; font-weight: 600; color: var(--text);
+    margin-bottom: 0.9rem; line-height: 1.45;
+  }
+  .item-tag {
+    display: inline-block; font-size: 0.68rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--scc-green); font-weight: 700; margin-bottom: 0.5rem;
+  }
+
+  .domain-divider {
+    display: flex; align-items: center; gap: 0.75rem; margin: 1.5rem 0 1rem;
+  }
+  .domain-divider .domain-label {
+    font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--scc-green); font-weight: 700; white-space: nowrap;
+  }
+  .domain-divider hr {
+    flex: 1; border: none; border-top: 1px solid var(--light-gray);
+  }
+
+  .rating-group { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .rating-btn {
+    flex: 1; min-width: 130px;
+    border: 1.5px solid var(--light-gray); background: var(--white);
+    border-radius: var(--radius); padding: 0.55rem 0.75rem;
+    font-family: inherit; font-size: 0.8rem; font-weight: 600;
+    color: var(--text-muted); cursor: pointer;
+    transition: all var(--transition); text-align: center; line-height: 1.3;
+  }
+  .rating-btn:hover { border-color: var(--scc-green); color: var(--scc-green); background: var(--scc-green-lt); }
+  .rating-btn.selected { background: var(--scc-green); border-color: var(--scc-green); color: var(--white); }
+  .rating-btn:focus-visible { outline: 3px solid var(--scc-green); outline-offset: 2px; }
+
+  .reflection-intro {
+    background: var(--white); border: 1.5px solid var(--light-gray);
+    border-radius: var(--radius); padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;
+  }
+  .reflection-intro strong { color: var(--text); }
+
+  .reflection-questions { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 1.5rem; }
+  .reflection-q {
+    background: var(--white); border: 1.5px solid var(--light-gray);
+    border-radius: var(--radius); padding: 1.25rem 1.5rem;
+  }
+  .q-num {
+    font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--scc-green); font-weight: 700; margin-bottom: 0.4rem;
+  }
+  .reflection-q label {
+    display: block; font-size: 0.97rem; font-weight: 700;
+    color: var(--text); margin-bottom: 0.25rem; line-height: 1.4;
+  }
+  .reflection-q .q-note {
+    font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.75rem; font-style: italic;
+  }
+  .reflection-q textarea {
+    width: 100%; min-height: 120px;
+    border: 1.5px solid var(--light-gray); border-radius: var(--radius);
+    padding: 0.75rem 1rem;
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--text);
+    resize: vertical; transition: border-color var(--transition);
+    background: var(--off-white); line-height: 1.55;
+  }
+  .reflection-q textarea:focus {
+    outline: none; border-color: var(--scc-green); background: var(--white);
+    box-shadow: 0 0 0 3px rgba(1,100,80,0.12);
+  }
+  .word-count { font-size: 0.75rem; color: var(--text-muted); text-align: right; margin-top: 0.3rem; }
+  .word-count.enough { color: var(--scc-green); font-weight: 600; }
+
+  .summary-panel {
+    background: var(--white); border: 1.5px solid var(--light-gray);
+    border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 1.5rem;
+  }
+  .summary-panel h3 {
+    font-size: 0.85rem; font-weight: 700; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem;
+  }
+  .summary-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem; margin-bottom: 1rem;
+  }
+  .summary-cell {
+    text-align: center; background: var(--off-white);
+    border-radius: var(--radius); padding: 0.75rem 0.5rem;
+  }
+  .summary-cell .count { font-size: 2rem; font-weight: 800; color: var(--scc-green); line-height: 1; }
+  .summary-cell .label { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; line-height: 1.3; }
+  .summary-note {
+    font-size: 0.85rem; color: var(--text-muted);
+    border-top: 1px solid var(--light-gray); padding-top: 0.75rem; font-style: italic;
+  }
+
+  .domain-summary {
+    margin-top: 1rem;
+    border-top: 1px solid var(--light-gray);
+    padding-top: 1rem;
+  }
+  .domain-summary-label {
+    font-size: 0.78rem; font-weight: 700; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.6rem;
+  }
+  .domain-row {
+    display: flex; align-items: center; gap: 0.6rem;
+    margin-bottom: 0.45rem; font-size: 0.83rem;
+  }
+  .domain-row .domain-name { flex: 1; color: var(--text-muted); }
+  .domain-row .domain-pill {
+    font-size: 0.72rem; font-weight: 700; padding: 0.15rem 0.65rem;
+    border-radius: 99px; text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .pill-got { background: var(--scc-green-lt); color: var(--scc-green-dk); }
+  .pill-figuring { background: #fff3cd; color: #7a5a00; }
+  .pill-lost { background: #fce8e8; color: #7a2020; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: var(--scc-green); color: var(--white);
+    border: none; border-radius: var(--radius);
+    padding: 0.75rem 1.75rem;
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 700;
+    cursor: pointer; transition: background var(--transition), transform var(--transition);
+    letter-spacing: 0.02em; text-decoration: none;
+  }
+  .btn:hover { background: var(--scc-green-dk); transform: translateY(-1px); }
+  .btn:focus-visible { outline: 3px solid var(--scc-green); outline-offset: 3px; }
+  .btn:active { transform: translateY(0); }
+  .btn-secondary {
+    background: var(--white); color: var(--scc-green); border: 2px solid var(--scc-green);
+  }
+  .btn-secondary:hover { background: var(--scc-green-lt); }
+  .btn-print {
+    background: var(--white); color: var(--text-muted);
+    border: 1.5px solid var(--light-gray); font-size: 0.82rem;
+  }
+  .btn-print:hover { background: var(--off-white); color: var(--text); }
+  .btn-row {
+    display: flex; gap: 0.75rem; align-items: center;
+    flex-wrap: wrap; margin-top: 1.5rem;
+  }
+
+  .completion-hero {
+    text-align: center; padding: 2.5rem 1rem;
+    background: var(--white); border-radius: var(--radius);
+    border: 1.5px solid var(--light-gray); margin-bottom: 1.5rem;
+  }
+  .completion-icon {
+    width: 64px; height: 64px; background: var(--scc-green-lt); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1rem; font-size: 1.75rem;
+  }
+  .completion-hero h2 {
+    font-family: 'Source Serif 4', serif; font-size: 1.5rem; font-weight: 700;
+    color: var(--black); margin-bottom: 0.5rem;
+  }
+  .completion-hero p { color: var(--text-muted); font-size: 0.93rem; max-width: 480px; margin: 0 auto; }
+
+  .submit-instructions {
+    background: var(--scc-green-lt); border: 1.5px solid var(--scc-green);
+    border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 1.5rem;
+  }
+  .submit-instructions h3 {
+    font-size: 0.85rem; font-weight: 700; color: var(--scc-green-dk);
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem;
+  }
+  .submit-instructions p { font-size: 0.88rem; color: var(--scc-green-dk); line-height: 1.55; }
+
+  .print-output {
+    display: none; background: var(--white); border: 1.5px solid var(--light-gray);
+    border-radius: var(--radius); padding: 1.5rem; margin-top: 1rem;
+    font-size: 0.88rem; white-space: pre-wrap; color: var(--text); line-height: 1.65;
+  }
+  .print-output.visible { display: block; }
+
+  .warn-box {
+    display: none; background: var(--amber-lt);
+    border: 1.5px solid var(--amber-border); border-radius: var(--radius);
+    padding: 0.85rem 1.1rem; font-size: 0.88rem; color: var(--amber);
+    margin-bottom: 1rem;
+  }
+
+  .next-steps {
+    background: var(--white); border: 1.5px solid var(--light-gray);
+    border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 1.5rem;
+  }
+  .next-steps h3 {
+    font-size: 0.85rem; font-weight: 700; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem;
+  }
+  .next-step-item {
+    display: flex; align-items: flex-start; gap: 0.75rem;
+    padding: 0.6rem 0; border-bottom: 1px solid var(--off-white);
+    font-size: 0.88rem;
+  }
+  .next-step-item:last-child { border-bottom: none; }
+  .next-step-bullet {
+    width: 22px; height: 22px; border-radius: 50%; background: var(--scc-green-lt);
+    color: var(--scc-green); font-size: 0.72rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+  .next-step-text { color: var(--text-muted); line-height: 1.5; }
+  .next-step-text strong { color: var(--text); }
+
+  @media print {
+    .progress-bar-wrap, .btn-row, .site-header { display: none; }
+    body { background: white; font-size: 11pt; }
+    main { padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<header class="site-header" role="banner">
+  <span class="wordmark">Salem Community College</span>
+  <span class="separator" aria-hidden="true"></span>
+  <span class="course-label">AI Literacy Training · Learn Module</span>
+  <span class="faculty-badge">Faculty</span>
+</header>
+
+<main id="main">
+
+  <div class="progress-bar-wrap" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Activity progress">
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-label" id="progressLabel">Step 1 of 4</div>
+  </div>
+
+  <!-- SECTION 1: Welcome -->
+  <section class="section active" id="sec-welcome" aria-label="Welcome">
+    <div class="hero">
+      <div class="hero-eyebrow">Learn Module · Introductory Activity</div>
+      <h1>Faculty AI Readiness Inventory</h1>
+      <p>An honest check-in on where you stand — not an evaluation, not a test. A starting point for thinking about AI in your teaching practice.</p>
+    </div>
+
+    <div style="background:var(--white);border:1.5px solid var(--light-gray);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.5rem;">
+      <p style="font-size:0.93rem;color:var(--text);line-height:1.6;">You don't need to be an AI expert to use it thoughtfully in your courses — or to talk about it credibly with your students. This inventory is designed to show you where you already have solid footing and where you might want to dig in deeper as you move through this course.</p>
+      <p style="font-size:0.93rem;color:var(--text);margin-top:0.75rem;line-height:1.6;"><strong>This isn't about your comfort level with technology.</strong> It's about your professional judgment, your pedagogical values, and what it means to teach in an AI-saturated world.</p>
+    </div>
+
+    <div style="background:var(--white);border:1.5px solid var(--light-gray);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.5rem;">
+      <p style="font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--scc-green);margin-bottom:0.5rem;">What to expect</p>
+      <p style="font-size:0.9rem;color:var(--text-muted);line-height:1.6;">This activity has four parts and takes about 20–25 minutes. You'll review a framework for thinking about AI in higher education, rate yourself on twelve pedagogical readiness statements, and write a short reflection that will inform how you engage with the rest of the course.</p>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn" onclick="goTo('sec-framework')">Let's get started →</button>
+    </div>
+  </section>
+
+  <!-- SECTION 2: Framework -->
+  <section class="section" id="sec-framework" aria-label="Framework overview">
+    <div class="section-header">
+      <div class="section-num">Part 1 of 3 · Context</div>
+      <h2>The Landscape You're Teaching In</h2>
+      <p>The U.S. Department of Labor's 2026 AI Literacy Framework describes what AI competency looks like for the workforce. It's also a useful map for thinking about what we're actually preparing students for — and what that demands of us as instructors.</p>
+    </div>
+
+    <div class="framework-grid">
+      <div class="framework-card">
+        <span class="card-num" aria-hidden="true">1</span>
+        <h3>Understand AI Principles</h3>
+        <p>Knowing what AI actually is — how it works, what it can and can't do, and why those limitations matter in an academic context.</p>
+        <span class="course-link">↳ Why faculty need conceptual fluency, not just tool fluency</span>
+      </div>
+
+      <div class="framework-card">
+        <span class="card-num" aria-hidden="true">2</span>
+        <h3>Explore AI Uses</h3>
+        <p>Understanding how students are already using AI — in your discipline, on your assignments, and often in ways you haven't anticipated.</p>
+        <span class="course-link">↳ Mapping AI use cases across course types</span>
+      </div>
+
+      <div class="framework-card">
+        <span class="card-num" aria-hidden="true">3</span>
+        <h3>Direct AI Effectively</h3>
+        <p>Knowing enough about how prompting works that you can recognize good AI use from bad — and teach the difference to students.</p>
+        <span class="course-link">↳ Prompting as a teachable skill</span>
+      </div>
+
+      <div class="framework-card">
+        <span class="card-num" aria-hidden="true">4</span>
+        <h3>Evaluate AI Outputs</h3>
+        <p>Being able to critically assess AI-generated content — for accuracy, voice, disciplinary appropriateness, and genuine intellectual contribution.</p>
+        <span class="course-link">↳ Discernment as a learning outcome</span>
+      </div>
+
+      <div class="framework-card" style="grid-column: 1 / -1;">
+        <span class="card-num" aria-hidden="true">5</span>
+        <h3>Use AI Responsibly</h3>
+        <p>Understanding the ethical, institutional, and pedagogical dimensions of AI — and being able to articulate a coherent position to your students, your department, and your institution.</p>
+        <span class="course-link">↳ Policy, transparency, and academic integrity in the AI era</span>
+      </div>
+    </div>
+
+    <div class="callout" role="note">
+      The question for faculty isn't just "should my students use AI?" It's "do I understand this well enough to make that call thoughtfully — and to help students use it in ways that actually serve their learning?"
+    </div>
+
+    <div class="btn-row">
+      <button class="btn" onclick="goTo('sec-inventory')">Next: Your inventory →</button>
+      <button class="btn btn-secondary" onclick="goTo('sec-welcome')">← Back</button>
+    </div>
+  </section>
+
+  <!-- SECTION 3: Inventory -->
+  <section class="section" id="sec-inventory" aria-label="Self-assessment inventory">
+    <div class="section-header">
+      <div class="section-num">Part 2 of 3 · Inventory</div>
+      <h2>Where You Are Right Now</h2>
+      <p>Rate each statement honestly. This is calibration, not evaluation. Your responses shape your reflection — and they're not visible to anyone else.</p>
+    </div>
+
+    <div class="inventory-list" id="inventoryList"></div>
+
+    <div class="warn-box" id="inventoryWarning" role="alert">
+      Please respond to all statements before continuing.
+    </div>
+
+    <div class="btn-row">
+      <button class="btn" onclick="checkInventory()">Next: Reflection →</button>
+      <button class="btn btn-secondary" onclick="goTo('sec-framework')">← Back</button>
+    </div>
+  </section>
+
+  <!-- SECTION 4: Reflection -->
+  <section class="section" id="sec-reflection" aria-label="Reflection questions">
+    <div class="section-header">
+      <div class="section-num">Part 3 of 3 · Reflection</div>
+      <h2>What You're Bringing Into This Course</h2>
+    </div>
+
+    <div class="reflection-intro">
+      <strong>This is the part that matters most.</strong> These questions are designed to surface your existing assumptions about AI in teaching — because those assumptions are the starting point for everything that follows in this course. Be specific. Vague answers serve no one, least of all you. Each response should be at least 2–3 sentences.
+    </div>
+
+    <div class="summary-panel" id="summaryPanel">
+      <h3>Your inventory at a glance</h3>
+      <div class="summary-grid">
+        <div class="summary-cell">
+          <div class="count" id="countGot">–</div>
+          <div class="label">Solid ground</div>
+        </div>
+        <div class="summary-cell">
+          <div class="count" id="countFiguring">–</div>
+          <div class="label">Still working it out</div>
+        </div>
+        <div class="summary-cell">
+          <div class="count" id="countLost">–</div>
+          <div class="label">This course is for you</div>
+        </div>
+      </div>
+      <div class="domain-summary">
+        <div class="domain-summary-label">By domain</div>
+        <div id="domainSummaryRows"></div>
+      </div>
+      <p class="summary-note">Keep this picture in mind as you answer the questions below.</p>
+    </div>
+
+    <div class="reflection-questions">
+
+      <div class="reflection-q">
+        <div class="q-num">Question 1</div>
+        <label for="q1">Which inventory statement gave you the most pause — and why?</label>
+        <p class="q-note">Name it. Then explain what your reaction to it tells you about your current assumptions or gaps.</p>
+        <textarea id="q1" placeholder="Be specific. Don't just say 'I'm still figuring it out' — explain what you're actually wrestling with..." oninput="updateWordCount('q1','wc1')"></textarea>
+        <div class="word-count" id="wc1">0 words</div>
+      </div>
+
+      <div class="reflection-q">
+        <div class="q-num">Question 2</div>
+        <label for="q2">What's your current working position on AI use in your courses — and where did it come from?</label>
+        <p class="q-note">This isn't asking for your policy. It's asking for the reasoning underneath it. What experiences, values, or concerns are shaping how you're approaching this?</p>
+        <textarea id="q2" placeholder="Think about what's actually driving your instincts here — not just what you'd say in a department meeting..." oninput="updateWordCount('q2','wc2')"></textarea>
+        <div class="word-count" id="wc2">0 words</div>
+      </div>
+
+      <div class="reflection-q">
+        <div class="q-num">Question 3</div>
+        <label for="q3">What's the one question you most hope this course helps you answer?</label>
+        <p class="q-note">Not a generic question. Something you've actually been sitting with — about your discipline, your students, your classroom, or yourself as a teacher.</p>
+        <textarea id="q3" placeholder="What question are you carrying into this course that you haven't been able to answer yet?..." oninput="updateWordCount('q3','wc3')"></textarea>
+        <div class="word-count" id="wc3">0 words</div>
+      </div>
+
+    </div>
+
+    <div class="warn-box" id="reflectionWarning" role="alert">
+      Please write a response to each question before continuing.
+    </div>
+
+    <div class="btn-row">
+      <button class="btn" onclick="checkReflection()">Finish & see my summary →</button>
+      <button class="btn btn-secondary" onclick="goTo('sec-inventory')">← Back</button>
+    </div>
+  </section>
+
+  <!-- SECTION 5: Completion -->
+  <section class="section" id="sec-complete" aria-label="Activity complete">
+
+    <div class="completion-hero">
+      <div class="completion-icon" aria-hidden="true">✓</div>
+      <h2>You've got a starting point.</h2>
+      <p>The inventory and reflection are done. Copy your responses below and paste them into the Learn Module submission on Canvas.</p>
+    </div>
+
+    <div class="submit-instructions">
+      <h3>How to submit</h3>
+      <p>Click "Copy my responses" to copy your full reflection to your clipboard. Paste it into the <strong>Learn Module: AI Readiness Reflection</strong> assignment on Canvas. You don't need to include your individual inventory ratings — just the three written responses.</p>
+    </div>
+
+    <div class="summary-panel">
+      <h3>Your inventory summary</h3>
+      <div class="summary-grid">
+        <div class="summary-cell">
+          <div class="count" id="countGot2">–</div>
+          <div class="label">Solid ground</div>
+        </div>
+        <div class="summary-cell">
+          <div class="count" id="countFiguring2">–</div>
+          <div class="label">Still working it out</div>
+        </div>
+        <div class="summary-cell">
+          <div class="count" id="countLost2">–</div>
+          <div class="label">This course is for you</div>
+        </div>
+      </div>
+      <div class="domain-summary">
+        <div class="domain-summary-label">By domain</div>
+        <div id="domainSummaryRows2"></div>
+      </div>
+      <p class="summary-note" id="summaryComment"></p>
+    </div>
+
+    <div class="next-steps">
+      <h3>What's next in this course</h3>
+      <div class="next-step-item">
+        <div class="next-step-bullet">R</div>
+        <div class="next-step-text"><strong>Read</strong> — Curated readings on AI and pedagogy, matched to the domains you rated lowest in your inventory.</div>
+      </div>
+      <div class="next-step-item">
+        <div class="next-step-bullet">P</div>
+        <div class="next-step-text"><strong>Practice</strong> — Hands-on activities for prompting, evaluating AI outputs, and applying the framework to your own courses.</div>
+      </div>
+      <div class="next-step-item">
+        <div class="next-step-bullet">T</div>
+        <div class="next-step-text"><strong>Teach</strong> — Tools and frameworks for developing your own AI policy, designing AI-resistant and AI-forward assignments, and talking to students about this.</div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn" onclick="copyResponses()" id="copyBtn">Copy my responses</button>
+      <button class="btn btn-print" onclick="showPrintOutput()">Show text to copy manually</button>
+    </div>
+
+    <div class="print-output" id="printOutput"></div>
+
+  </section>
+
+</main>
+
+<script>
+const domains = [
+  { name: "Conceptual Fluency", label: "Conceptual fluency" },
+  { name: "Pedagogical Design", label: "Pedagogical design" },
+  { name: "Academic Integrity", label: "Academic integrity" },
+  { name: "Disciplinary Judgment", label: "Disciplinary judgment" },
+];
+
+const inventoryItems = [
+  { tag: "Conceptual Fluency", domain: 0, text: "I can explain in plain language how large language models work — including why they generate plausible-sounding but sometimes factually wrong content — well enough to address a student's question about it mid-class." },
+  { tag: "Conceptual Fluency", domain: 0, text: "I understand the difference between AI tools that generate content from scratch and AI tools that assist with an existing piece of work — and I can explain why that distinction matters for my students." },
+  { tag: "Conceptual Fluency", domain: 0, text: "I know enough about how AI training data works to talk credibly with students about bias, representation, and why AI outputs can reflect systemic inequities." },
+  { tag: "Pedagogical Design", domain: 1, text: "I could redesign at least one of my major assignments right now in a way that makes AI use genuinely transparent and pedagogically purposeful, rather than just permitting or banning it." },
+  { tag: "Pedagogical Design", domain: 1, text: "I have a clear sense of which learning outcomes in my course require the kind of thinking and process that AI cannot replicate — and I've designed my assessments with that in mind." },
+  { tag: "Pedagogical Design", domain: 1, text: "I can have a productive conversation with a student about the difference between using AI to support their learning and using AI to replace it — without it feeling like a gotcha." },
+  { tag: "Academic Integrity", domain: 2, text: "I have a clear, defensible position on AI use in my courses that I could articulate to a student, a colleague, and my department chair — and the reasoning behind it is consistent across all three." },
+  { tag: "Academic Integrity", domain: 2, text: "I understand the limitations of AI detection tools well enough to know why I can't rely on them as evidence of academic dishonesty — and I know what I would do instead." },
+  { tag: "Academic Integrity", domain: 2, text: "I know what SCC's current institutional guidance on AI says, and I've thought through how it applies (or doesn't apply) to my specific teaching context." },
+  { tag: "Disciplinary Judgment", domain: 3, text: "I can evaluate an AI-generated piece of writing, code, analysis, or artifact in my discipline and identify where it falls short — not just technically, but intellectually and ethically." },
+  { tag: "Disciplinary Judgment", domain: 3, text: "I've thought about what AI genuinely cannot do in my field — what kinds of expertise, judgment, or creativity remain distinctly human — and I could make that argument to a skeptical student." },
+  { tag: "Disciplinary Judgment", domain: 3, text: "I'm aware of how AI is already being used in my field professionally, and I can connect that context to what I'm asking students to learn and practice." },
+];
+
+const ratings = [
+  { value: "got", label: "Solid ground" },
+  { value: "figuring", label: "Still working it out" },
+  { value: "lost", label: "This course is for me" },
+];
+
+const responses = {};
+const sectionOrder = ['sec-welcome','sec-framework','sec-inventory','sec-reflection','sec-complete'];
+
+function buildInventory() {
+  const list = document.getElementById('inventoryList');
+  let currentDomain = -1;
+  inventoryItems.forEach((item, i) => {
+    if (item.domain !== currentDomain) {
+      currentDomain = item.domain;
+      const divider = document.createElement('div');
+      divider.className = 'domain-divider';
+      divider.innerHTML = `<span class="domain-label">${domains[item.domain].name}</span><hr>`;
+      list.appendChild(divider);
+    }
+    const div = document.createElement('div');
+    div.className = 'inventory-item';
+    div.id = `item-${i}`;
+    div.innerHTML = `
+      <div class="item-tag">${item.tag}</div>
+      <div class="item-text">${item.text}</div>
+      <div class="rating-group" role="group" aria-label="Rate your readiness: ${item.text}">
+        ${ratings.map(r => `
+          <button class="rating-btn" data-item="${i}" data-value="${r.value}"
+            onclick="selectRating(${i}, '${r.value}', this)" aria-pressed="false">${r.label}</button>
+        `).join('')}
+      </div>
+    `;
+    list.appendChild(div);
+  });
+}
+
+function selectRating(itemIndex, value, btn) {
+  responses[`item_${itemIndex}`] = value;
+  const group = btn.closest('.rating-group');
+  group.querySelectorAll('.rating-btn').forEach(b => {
+    b.classList.remove('selected');
+    b.setAttribute('aria-pressed', 'false');
+  });
+  btn.classList.add('selected');
+  btn.setAttribute('aria-pressed', 'true');
+  document.getElementById(`item-${itemIndex}`).classList.add('answered');
+}
+
+function goTo(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  updateProgress(id);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (id === 'sec-reflection') buildSummary();
+  if (id === 'sec-complete') buildCompletion();
+}
+
+function updateProgress(id) {
+  const idx = sectionOrder.indexOf(id);
+  const pct = Math.round((idx / (sectionOrder.length - 1)) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = `Step ${idx + 1} of ${sectionOrder.length}`;
+  document.querySelector('.progress-bar-wrap').setAttribute('aria-valuenow', pct);
+}
+
+function checkInventory() {
+  const unanswered = inventoryItems.some((_, i) => !responses[`item_${i}`]);
+  const warn = document.getElementById('inventoryWarning');
+  if (unanswered) {
+    warn.style.display = 'block';
+    warn.focus();
+    return;
+  }
+  warn.style.display = 'none';
+  goTo('sec-reflection');
+}
+
+function checkReflection() {
+  const q1 = document.getElementById('q1').value.trim();
+  const q2 = document.getElementById('q2').value.trim();
+  const q3 = document.getElementById('q3').value.trim();
+  const warn = document.getElementById('reflectionWarning');
+  if (!q1 || !q2 || !q3) {
+    warn.style.display = 'block';
+    warn.focus();
+    return;
+  }
+  warn.style.display = 'none';
+  goTo('sec-complete');
+}
+
+function getCounts() {
+  let got = 0, figuring = 0, lost = 0;
+  inventoryItems.forEach((_, i) => {
+    const v = responses[`item_${i}`];
+    if (v === 'got') got++;
+    else if (v === 'figuring') figuring++;
+    else if (v === 'lost') lost++;
+  });
+  return { got, figuring, lost };
+}
+
+function getDomainCounts() {
+  return domains.map((d, di) => {
+    let got = 0, figuring = 0, lost = 0;
+    inventoryItems.forEach((item, i) => {
+      if (item.domain !== di) return;
+      const v = responses[`item_${i}`];
+      if (v === 'got') got++;
+      else if (v === 'figuring') figuring++;
+      else if (v === 'lost') lost++;
+    });
+    let dominant = 'figuring';
+    if (got >= figuring && got >= lost) dominant = 'got';
+    else if (lost > figuring) dominant = 'lost';
+    const labels = { got: 'Solid ground', figuring: 'Still working it out', lost: 'This course is for me' };
+    const pillClass = { got: 'pill-got', figuring: 'pill-figuring', lost: 'pill-lost' };
+    return { name: d.label, dominant, label: labels[dominant], pillClass: pillClass[dominant] };
+  });
+}
+
+function renderDomainRows(containerId) {
+  const dc = getDomainCounts();
+  const container = document.getElementById(containerId);
+  container.innerHTML = dc.map(d => `
+    <div class="domain-row">
+      <span class="domain-name">${d.name}</span>
+      <span class="domain-pill ${d.pillClass}">${d.label}</span>
+    </div>
+  `).join('');
+}
+
+function buildSummary() {
+  const c = getCounts();
+  document.getElementById('countGot').textContent = c.got;
+  document.getElementById('countFiguring').textContent = c.figuring;
+  document.getElementById('countLost').textContent = c.lost;
+  renderDomainRows('domainSummaryRows');
+}
+
+function buildCompletion() {
+  const c = getCounts();
+  document.getElementById('countGot2').textContent = c.got;
+  document.getElementById('countFiguring2').textContent = c.figuring;
+  document.getElementById('countLost2').textContent = c.lost;
+  renderDomainRows('domainSummaryRows2');
+
+  let note = '';
+  if (c.lost >= 6) note = "A lot of 'this course is for me' responses is a genuinely useful starting point. You know what you don't know — and that's the hardest part. The rest of this course is built for exactly where you are.";
+  else if (c.got >= 8) note = "You're walking into this with substantial foundation. Use the Read and Practice modules to sharpen the edges — and the Teach module to translate what you know into practice your students will actually feel.";
+  else note = "A mix of solid ground and open questions is exactly where most thoughtful faculty land. You have enough foundation to engage critically with the harder questions — and this course is designed to help you get there.";
+  document.getElementById('summaryComment').textContent = note;
+}
+
+function updateWordCount(textareaId, counterId) {
+  const text = document.getElementById(textareaId).value.trim();
+  const words = text ? text.split(/\s+/).length : 0;
+  const el = document.getElementById(counterId);
+  el.textContent = words + (words === 1 ? ' word' : ' words');
+  el.className = 'word-count' + (words >= 40 ? ' enough' : '');
+}
+
+function getResponseText() {
+  const c = getCounts();
+  const dc = getDomainCounts();
+  const q1 = document.getElementById('q1').value.trim();
+  const q2 = document.getElementById('q2').value.trim();
+  const q3 = document.getElementById('q3').value.trim();
+
+  const itemLines = inventoryItems.map((item, i) => {
+    const v = responses[`item_${i}`] || '—';
+    const label = ratings.find(r => r.value === v)?.label || v;
+    return `  [${label}] (${item.tag}) ${item.text}`;
+  }).join('\n');
+
+  const domainLines = dc.map(d => `  ${d.name}: ${d.label}`).join('\n');
+
+  return `LEARN MODULE: AI READINESS REFLECTION
+Faculty AI Literacy Training · Salem Community College
+Completed: ${new Date().toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'})}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+INVENTORY SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Solid ground: ${c.got}  |  Still working it out: ${c.figuring}  |  This course is for me: ${c.lost}
+
+By domain:
+${domainLines}
+
+My ratings:
+${itemLines}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+REFLECTION RESPONSES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Question 1: Which inventory statement gave you the most pause — and why?
+${q1}
+
+Question 2: What's your current working position on AI use in your courses — and where did it come from?
+${q2}
+
+Question 3: What's the one question you most hope this course helps you answer?
+${q3}`;
+}
+
+function copyResponses() {
+  const text = getResponseText();
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = 'Copied! ✓';
+    btn.style.background = '#014a3c';
+    setTimeout(() => {
+      btn.textContent = 'Copy my responses';
+      btn.style.background = '';
+    }, 2500);
+  }).catch(() => showPrintOutput());
+}
+
+function showPrintOutput() {
+  const el = document.getElementById('printOutput');
+  el.textContent = getResponseText();
+  el.classList.add('visible');
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+buildInventory();
+updateProgress('sec-welcome');
+</script>
+</body>
+</html>
