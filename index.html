@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Literacy Training — Salem Community College</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background: #ffffff;
+      color: #1a1a1a;
+      min-height: 100vh;
+      padding: 3.5rem 1rem 5rem;
+    }
+
+    .container {
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    header { margin-bottom: 2.75rem; }
+
+    .site-label {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #1a6b4a;
+      margin-bottom: 0.6rem;
+    }
+
+    .site-title {
+      font-size: 26px;
+      font-weight: 500;
+      color: #1a1a1a;
+      margin-bottom: 0.6rem;
+      line-height: 1.3;
+    }
+
+    .site-desc {
+      font-size: 15px;
+      color: #444444;
+      line-height: 1.65;
+      max-width: 480px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #616161;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .tools { display: flex; flex-direction: column; gap: 12px; margin-bottom: 2.5rem; }
+
+    .tool-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      background: #ffffff;
+      border: 1px solid #d0d0d0;
+      border-radius: 12px;
+      padding: 1.25rem;
+      text-decoration: none;
+      color: #1a1a1a;
+      transition: border-color 0.15s;
+    }
+
+    .tool-card:hover { border-color: #1a6b4a; }
+
+    .tool-icon {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      border-radius: 8px;
+      background: #e8f5ef;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      margin-top: 1px;
+    }
+
+    .tool-body { flex: 1; }
+
+    .tool-module {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #1a6b4a;
+      margin-bottom: 0.25rem;
+    }
+
+    .tool-name {
+      font-size: 16px;
+      font-weight: 500;
+      color: #1a1a1a;
+      margin-bottom: 0.35rem;
+      line-height: 1.3;
+    }
+
+    .tool-desc {
+      font-size: 14px;
+      color: #444444;
+      line-height: 1.55;
+      margin-bottom: 0.75rem;
+    }
+
+    .tool-meta { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    .tag {
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      border: 1px solid #c8c8c8;
+      color: #444444;
+      background: #f5f5f5;
+    }
+
+    .tool-arrow {
+      font-size: 18px;
+      color: #616161;
+      margin-top: 2px;
+      transition: color 0.15s, transform 0.15s;
+    }
+
+    .tool-card:hover .tool-arrow {
+      color: #1a6b4a;
+      transform: translateX(2px);
+    }
+
+    .course-link-wrap { margin-top: 0.25rem; }
+
+    .course-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      color: #1a6b4a;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 9px 16px;
+      border: 1px solid #1a6b4a;
+      border-radius: 8px;
+      transition: background 0.15s;
+    }
+
+    .course-link:hover { background: #e8f5ef; }
+
+    footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e0e0e0;
+      font-size: 13px;
+      color: #616161;
+    }
+
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap;
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 2rem 0.75rem 4rem; }
+      .site-title { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <p class="site-label">Salem Community College</p>
+    <h1 class="site-title">AI Literacy Training Course</h1>
+    <p class="site-desc">Standalone tools and activities to support faculty through SCC's AI Literacy Training. Use them alongside the Canvas course or on their own.</p>
+  </header>
+
+  <main id="main">
+
+    <p class="section-label">Tools &amp; activities</p>
+
+    <div class="tools">
+
+      <a class="tool-card" href="ai-course-sorter.html">
+        <div class="tool-icon" aria-hidden="true">🧭</div>
+        <div class="tool-body">
+          <div class="tool-module">All modules</div>
+          <div class="tool-name">Where should I start?</div>
+          <div class="tool-desc">Four questions that route faculty to the module that fits where they actually are — not just Module One by default.</div>
+          <div class="tool-meta">
+            <span class="tag">4 questions</span>
+            <span class="tag">~2 min</span>
+          </div>
+        </div>
+        <div class="tool-arrow" aria-hidden="true">→</div>
+      </a>
+
+      <a class="tool-card" href="faculty-ai-readiness-inventory.html">
+        <div class="tool-icon" aria-hidden="true">📋</div>
+        <div class="tool-body">
+          <div class="tool-module">Module One · Learn</div>
+          <div class="tool-name">Faculty AI Readiness Inventory</div>
+          <div class="tool-desc">A structured self-assessment across five AI competency domains, followed by a guided reflection. Not an evaluation — a starting point.</div>
+          <div class="tool-meta">
+            <span class="tag">4 steps</span>
+            <span class="tag">20–25 min</span>
+            <span class="tag">Canvas submission</span>
+          </div>
+        </div>
+        <div class="tool-arrow" aria-hidden="true">→</div>
+      </a>
+
+    </div>
+
+    <p class="section-label">The course on Canvas</p>
+    <div class="course-link-wrap">
+      <a class="course-link" href="https://salemcc.instructure.com/courses/10003" target="_blank" rel="noopener">
+        Open AI Literacy Training ↗
+      </a>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>Salem Community College · Instructional Development · Tools updated as the course grows.</p>
+  </footer>
+
+</div>
+
+</body>
+</html>
