@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Where should I start? — SCC AI Literacy Training</title>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --scc-green: #1a6b4a;
+      --scc-green-dark: #0f4a32;
+      --scc-green-light: #e8f5ef;
+      --scc-green-mid: #2d8a62;
+      --text-primary: #1a1a1a;
+      --text-secondary: #555;
+      --text-hint: #888;
+      --bg-primary: #fff;
+      --bg-secondary: #f5f5f5;
+      --border-light: rgba(0,0,0,0.12);
+      --border-mid: rgba(0,0,0,0.22);
+      --radius-md: 8px;
+      --radius-lg: 12px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --text-primary: #f0f0f0;
+        --text-secondary: #aaa;
+        --text-hint: #777;
+        --bg-primary: #1c1c1e;
+        --bg-secondary: #2a2a2c;
+        --border-light: rgba(255,255,255,0.1);
+        --border-mid: rgba(255,255,255,0.2);
+      }
+      .option-btn:hover { background: rgba(26,107,74,0.2); }
+      .option-btn.selected { background: rgba(26,107,74,0.25); }
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 3rem 1rem 4rem;
+    }
+
+    .card {
+      background: var(--bg-primary);
+      border-radius: var(--radius-lg);
+      border: 0.5px solid var(--border-light);
+      padding: 2rem 2rem 2.5rem;
+      width: 100%;
+      max-width: 560px;
+    }
+
+    .site-label {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--scc-green);
+      margin-bottom: 1.75rem;
+    }
+
+    /* ── Progress ── */
+    .progress-bar { display: flex; gap: 6px; margin-bottom: 2rem; }
+    .progress-step { height: 4px; flex: 1; background: var(--border-light); border-radius: 2px; transition: background 0.3s; }
+    .progress-step.done { background: var(--scc-green); }
+    .progress-step.active { background: var(--scc-green-mid); }
+
+    /* ── Screens ── */
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    /* ── Intro ── */
+    .intro-title { font-size: 22px; font-weight: 500; color: var(--text-primary); margin-bottom: 0.6rem; }
+    .intro-sub { font-size: 15px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 1.5rem; }
+    .module-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.75rem; }
+    .chip {
+      font-size: 12px; padding: 4px 12px;
+      border-radius: 20px; border: 0.5px solid var(--border-mid);
+      color: var(--text-secondary); background: var(--bg-secondary);
+    }
+
+    /* ── Question ── */
+    .question-label {
+      font-size: 12px; font-weight: 500; color: var(--text-hint);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem;
+    }
+    .question-text {
+      font-size: 19px; font-weight: 500; color: var(--text-primary);
+      margin-bottom: 1.5rem; line-height: 1.45;
+    }
+    .options { display: flex; flex-direction: column; gap: 10px; }
+    .option-btn {
+      background: var(--bg-primary);
+      border: 0.5px solid var(--border-mid);
+      border-radius: var(--radius-lg);
+      padding: 14px 16px;
+      text-align: left;
+      cursor: pointer;
+      font-size: 15px;
+      color: var(--text-primary);
+      line-height: 1.4;
+      transition: border-color 0.15s, background 0.15s;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-family: inherit;
+    }
+    .option-btn:hover { border-color: var(--scc-green); background: var(--scc-green-light); }
+    .option-btn.selected { border: 2px solid var(--scc-green); background: var(--scc-green-light); }
+    .option-letter {
+      width: 24px; height: 24px; min-width: 24px;
+      border-radius: 50%;
+      background: var(--bg-secondary);
+      border: 0.5px solid var(--border-mid);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 500;
+      color: var(--text-secondary);
+      transition: background 0.15s, color 0.15s;
+    }
+    .option-btn.selected .option-letter { background: var(--scc-green); color: white; border-color: var(--scc-green); }
+    .option-text-wrap { flex: 1; }
+    .option-sub { font-size: 13px; color: var(--text-secondary); margin-top: 3px; }
+
+    /* ── Nav row ── */
+    .nav-row { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; }
+    .step-count { font-size: 13px; color: var(--text-hint); }
+    .nav-btn {
+      background: transparent; border: 0.5px solid var(--border-mid);
+      border-radius: var(--radius-md); padding: 9px 18px;
+      font-size: 14px; cursor: pointer; color: var(--text-primary);
+      transition: background 0.15s; font-family: inherit;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .nav-btn:hover { background: var(--bg-secondary); }
+    .nav-btn.primary { background: var(--scc-green); color: white; border-color: var(--scc-green); }
+    .nav-btn.primary:hover { background: var(--scc-green-dark); }
+    .nav-btn:disabled { opacity: 0.3; cursor: default; }
+
+    /* ── Result card ── */
+    .result-card {
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      background: var(--scc-green);
+    }
+    .result-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      font-size: 11px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      padding: 4px 12px; border-radius: var(--radius-md);
+      margin-bottom: 0.75rem;
+    }
+    .result-module { font-size: 22px; font-weight: 500; color: white; margin-bottom: 0.5rem; }
+    .result-desc { font-size: 15px; color: rgba(255,255,255,0.9); line-height: 1.65; margin-bottom: 1.25rem; }
+    .result-meta { font-size: 13px; color: rgba(255,255,255,0.72); margin-bottom: 1.25rem; }
+    .result-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: white; color: var(--scc-green-dark);
+      border-radius: var(--radius-md); padding: 10px 18px;
+      font-size: 14px; text-decoration: none; font-weight: 500;
+      transition: opacity 0.15s;
+    }
+    .result-link:hover { opacity: 0.88; }
+
+    /* ── Other modules ── */
+    .other-modules { margin-top: 1.5rem; }
+    .other-title {
+      font-size: 12px; font-weight: 500; color: var(--text-hint);
+      text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.75rem;
+    }
+    .other-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; }
+    .other-card {
+      background: var(--bg-primary);
+      border: 0.5px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 10px 12px;
+      font-size: 13px;
+      cursor: pointer;
+      color: var(--text-primary);
+      text-decoration: none;
+      display: block;
+      transition: border-color 0.15s;
+    }
+    .other-card:hover { border-color: var(--scc-green); }
+    .other-card-name { font-weight: 500; margin-bottom: 2px; color: var(--text-primary); }
+    .other-card-time { color: var(--text-hint); font-size: 12px; }
+
+    .restart-btn {
+      margin-top: 1rem;
+      background: transparent; border: 0.5px solid var(--border-light);
+      border-radius: var(--radius-md); padding: 8px 16px;
+      font-size: 13px; cursor: pointer; color: var(--text-secondary);
+      transition: background 0.15s; font-family: inherit;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .restart-btn:hover { background: var(--bg-secondary); }
+
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap;
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 1.5rem 0.75rem 3rem; }
+      .card { padding: 1.5rem 1.25rem 2rem; }
+      .question-text { font-size: 17px; }
+    }
+  </style>
+</head>
+<body>
+
+<main class="card" role="main">
+  <h2 class="sr-only">AI Literacy Course module recommender — answer a few questions to find your best starting point</h2>
+  <p class="site-label">SCC AI Literacy Training</p>
+
+  <!-- Intro -->
+  <div class="screen active" id="screen-intro">
+    <p class="intro-title">Where should you start?</p>
+    <p class="intro-sub">SCC's AI Literacy Training has four modules. Answer four quick questions and we'll point you to the right starting point — no wrong answers, no pressure.</p>
+    <div class="module-chips">
+      <span class="chip">Learn</span>
+      <span class="chip">Read</span>
+      <span class="chip">Practice</span>
+      <span class="chip">Teach</span>
+    </div>
+    <button class="nav-btn primary" onclick="startQuiz()">
+      Let's find out →
+    </button>
+  </div>
+
+  <!-- Quiz -->
+  <div class="screen" id="screen-quiz">
+    <div class="progress-bar" id="progress"></div>
+    <div class="question-label" id="q-label">Question 1 of 4</div>
+    <div class="question-text" id="q-text"></div>
+    <div class="options" id="q-options" role="group" aria-labelledby="q-text"></div>
+    <div class="nav-row">
+      <button class="nav-btn" id="btn-back" onclick="goBack()">
+        ← Back
+      </button>
+      <span class="step-count" id="step-count" aria-live="polite"></span>
+      <button class="nav-btn primary" id="btn-next" onclick="goNext()" disabled>
+        Next →
+      </button>
+    </div>
+  </div>
+
+  <!-- Result -->
+  <div class="screen" id="screen-result" aria-live="polite"></div>
+</main>
+
+<script>
+  const questions = [
+    {
+      text: "When you think about AI tools like ChatGPT or Claude, how would you describe your familiarity?",
+      options: [
+        { letter: "A", text: "Honestly pretty limited", sub: "I've heard of them but haven't really dug in", score: { learn: 3, read: 1, practice: 0, teach: 0 } },
+        { letter: "B", text: "I have a general sense of what they are", sub: "I know the basics but still have real questions", score: { learn: 2, read: 2, practice: 1, teach: 0 } },
+        { letter: "C", text: "I've used them and feel reasonably comfortable", sub: "I've experimented and formed some opinions", score: { learn: 0, read: 1, practice: 2, teach: 2 } },
+        { letter: "D", text: "I use AI regularly and know it well", sub: "It's already part of how I work", score: { learn: 0, read: 0, practice: 1, teach: 3 } }
+      ]
+    },
+    {
+      text: "What's your biggest question about AI in your classroom right now?",
+      options: [
+        { letter: "A", text: "What is AI, and what are students actually using?", sub: "I want to understand the landscape before anything else", score: { learn: 3, read: 0, practice: 0, teach: 0 } },
+        { letter: "B", text: "What does the research say, and what's worth reading?", sub: "I want informed perspectives before I make decisions", score: { learn: 0, read: 3, practice: 0, teach: 0 } },
+        { letter: "C", text: "How does it actually behave when I use it?", sub: "I want to get my hands on it and see for myself", score: { learn: 0, read: 0, practice: 3, teach: 0 } },
+        { letter: "D", text: "How do I update my assignments and write a policy?", sub: "I'm ready to redesign my courses around this", score: { learn: 0, read: 0, practice: 0, teach: 3 } }
+      ]
+    },
+    {
+      text: "Have you had to address AI in your course yet — whether in a syllabus, an assignment, or a student conversation?",
+      options: [
+        { letter: "A", text: "No, and I'm not sure where to start", sub: "", score: { learn: 3, read: 1, practice: 0, teach: 0 } },
+        { letter: "B", text: "I've thought about it but haven't done anything formal", sub: "", score: { learn: 1, read: 2, practice: 1, teach: 1 } },
+        { letter: "C", text: "I've had the conversation but my approach is still evolving", sub: "", score: { learn: 0, read: 1, practice: 2, teach: 1 } },
+        { letter: "D", text: "Yes — and I want to make my approach more deliberate", sub: "", score: { learn: 0, read: 0, practice: 1, teach: 3 } }
+      ]
+    },
+    {
+      text: "If you had 30 minutes to spend on this course today, what would feel most useful?",
+      options: [
+        { letter: "A", text: "A clear explanation of what AI is and how it works", sub: "Starting from foundations", score: { learn: 3, read: 0, practice: 0, teach: 0 } },
+        { letter: "B", text: "A curated reading list from researchers and practitioners", sub: "I learn well through articles and argument", score: { learn: 0, read: 3, practice: 0, teach: 0 } },
+        { letter: "C", text: "An activity where I actually test and interrogate an AI model", sub: "Hands-on is how I understand things", score: { learn: 0, read: 0, practice: 3, teach: 0 } },
+        { letter: "D", text: "A framework for redesigning my assignments and drafting a policy", sub: "I want to leave with something I can use", score: { learn: 0, read: 0, practice: 0, teach: 3 } }
+      ]
+    }
+  ];
+
+  const modules = {
+    learn: {
+      name: "Module One: Learn",
+      tag: "Your starting point",
+      time: "4.5 hours · 3 assignments",
+      clos: "CLOs 1, 2, 4",
+      desc: "This module is the right foundation for you. It covers what AI actually is, how it works, what students are using, and how institutions are responding. You'll leave with a clearer picture of the landscape before making any decisions about your courses.",
+      url: "https://salemcc.instructure.com/courses/10003/modules/113092"
+    },
+    read: {
+      name: "Module Two: Read",
+      tag: "Your starting point",
+      time: "8 hours · 5 assignments",
+      clos: "CLOs 2, 3",
+      desc: "You're ready to engage with what researchers and educators are actually saying. This module is a handpicked reading list with current research, practice perspectives, and debates worth knowing — less about the technology itself and more about what people are making of it.",
+      url: "https://salemcc.instructure.com/courses/10003/modules/113091"
+    },
+    practice: {
+      name: "Module Three: Practice",
+      tag: "Your starting point",
+      time: "4.5 hours · 3 assignments",
+      clos: "CLOs 5, 6",
+      desc: "You have enough context to start getting your hands dirty. This module puts you directly in the driver's seat with interactive activities — you'll run prompts, see how models behave, identify hallucinations in real time, and come away with a much more grounded sense of what AI can and can't do.",
+      url: "https://salemcc.instructure.com/courses/10003/modules/113087"
+    },
+    teach: {
+      name: "Module Four: Teach",
+      tag: "Your starting point",
+      time: "8 hours · 5 assignments",
+      clos: "CLOs 6, 7",
+      desc: "You're ready to apply what you know directly to your courses. This module is where you design AI-forward and AI-resistant assignments, revisit your assessment strategy through Bloom's Taxonomy, and draft a course-level AI policy grounded in your pedagogical values.",
+      url: "https://salemcc.instructure.com/courses/10003/modules/113089"
+    }
+  };
+
+  const allModules = [
+    { key: "learn", name: "Learn", time: "4.5h", url: modules.learn.url },
+    { key: "read",  name: "Read",  time: "8h",   url: modules.read.url  },
+    { key: "practice", name: "Practice", time: "4.5h", url: modules.practice.url },
+    { key: "teach", name: "Teach", time: "8h",   url: modules.teach.url }
+  ];
+
+  let current = 0;
+  let answers = [];
+
+  function startQuiz() {
+    document.getElementById('screen-intro').classList.remove('active');
+    document.getElementById('screen-quiz').classList.add('active');
+    renderQuestion();
+  }
+
+  function renderQuestion() {
+    const q = questions[current];
+    document.getElementById('q-label').textContent = `Question ${current + 1} of ${questions.length}`;
+    document.getElementById('q-text').textContent = q.text;
+    document.getElementById('step-count').textContent = `${current + 1} / ${questions.length}`;
+
+    const prog = document.getElementById('progress');
+    prog.innerHTML = questions.map((_, i) => {
+      let cls = 'progress-step';
+      if (i < current) cls += ' done';
+      else if (i === current) cls += ' active';
+      return `<div class="${cls}"></div>`;
+    }).join('');
+
+    const sel = answers[current];
+    document.getElementById('q-options').innerHTML = q.options.map((o, i) => `
+      <button class="option-btn${sel === i ? ' selected' : ''}" onclick="selectOption(${i})" aria-pressed="${sel === i}">
+        <div class="option-letter" aria-hidden="true">${o.letter}</div>
+        <div class="option-text-wrap">
+          <div>${o.text}</div>
+          ${o.sub ? `<div class="option-sub">${o.sub}</div>` : ''}
+        </div>
+      </button>
+    `).join('');
+
+    document.getElementById('btn-back').disabled = current === 0;
+    document.getElementById('btn-next').disabled = sel === undefined;
+
+    const nextBtn = document.getElementById('btn-next');
+    if (current === questions.length - 1) {
+      nextBtn.innerHTML = `See my result →`;
+    } else {
+      nextBtn.innerHTML = `Next →`;
+    }
+  }
+
+  function selectOption(i) {
+    answers[current] = i;
+    document.querySelectorAll('.option-btn').forEach((b, idx) => {
+      b.classList.toggle('selected', idx === i);
+      b.setAttribute('aria-pressed', idx === i);
+    });
+    document.getElementById('btn-next').disabled = false;
+  }
+
+  function goBack() {
+    if (current > 0) { current--; renderQuestion(); }
+  }
+
+  function goNext() {
+    if (answers[current] === undefined) return;
+    if (current < questions.length - 1) {
+      current++;
+      renderQuestion();
+    } else {
+      calcResult();
+    }
+  }
+
+  function calcResult() {
+    const scores = { learn: 0, read: 0, practice: 0, teach: 0 };
+    answers.forEach((a, qi) => {
+      const s = questions[qi].options[a].score;
+      Object.keys(s).forEach(k => scores[k] += s[k]);
+    });
+    const winner = Object.entries(scores).sort((a, b) => b[1] - a[1])[0][0];
+    showResult(winner);
+  }
+
+  function showResult(key) {
+    document.getElementById('screen-quiz').classList.remove('active');
+    const r = document.getElementById('screen-result');
+    r.classList.add('active');
+    const m = modules[key];
+    const others = allModules.filter(x => x.key !== key);
+    r.innerHTML = `
+      <div class="result-card">
+        <div class="result-badge">${m.tag}</div>
+        <div class="result-module">${m.name}</div>
+        <div class="result-desc">${m.desc}</div>
+        <div class="result-meta">${m.time} &nbsp;·&nbsp; ${m.clos}</div>
+        <a class="result-link" href="${m.url}" target="_blank" rel="noopener">
+          Go to module ↗
+        </a>
+      </div>
+      <div class="other-modules">
+        <div class="other-title">The full course</div>
+        <div class="other-grid">
+          ${others.map(o => `
+            <a href="${o.url}" target="_blank" rel="noopener" class="other-card">
+              <div class="other-card-name">${o.name}</div>
+              <div class="other-card-time">${o.time}</div>
+            </a>
+          `).join('')}
+        </div>
+      </div>
+      <button class="restart-btn" onclick="restart()">
+        ↺ Start over
+      </button>
+    `;
+  }
+
+  function restart() {
+    current = 0;
+    answers = [];
+    document.getElementById('screen-result').classList.remove('active');
+    document.getElementById('screen-quiz').classList.add('active');
+    renderQuestion();
+  }
+</script>
+
+</body>
+</html>
