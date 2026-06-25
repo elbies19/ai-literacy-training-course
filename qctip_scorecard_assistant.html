@@ -30,25 +30,20 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--gray-50); color: var(--gray-800); font-size: 15px; line-height: 1.6; min-height: 100vh; }
 
-  /* Header */
   .header { background: var(--navy); padding: 0 2rem; height: 56px; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 200; }
   .header-title { font-size: 16px; color: var(--white); font-weight: 500; }
   .header-badge { font-size: 11px; background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.75); padding: 2px 8px; border-radius: 20px; }
 
-  /* Progress */
   .progress-bar-wrap { position: sticky; top: 56px; z-index: 199; background: var(--white); border-bottom: 1px solid var(--gray-200); }
   .progress-bar-fill { height: 3px; background: var(--teal); width: 0%; transition: width 0.3s; }
   .progress-info { padding: 5px 2rem; display: flex; justify-content: space-between; font-size: 12px; color: var(--gray-400); }
   .progress-score { font-weight: 600; color: var(--gray-800); }
 
-  /* Layout */
   .main { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem 5rem; }
 
-  /* Steps */
   .step { display: none; }
   .step.active { display: block; }
 
-  /* Intro */
   .intro-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); margin-bottom: 6px; }
   .intro-title { font-size: 26px; font-weight: 600; color: var(--navy); line-height: 1.3; margin-bottom: 10px; }
   .intro-desc { font-size: 14px; color: var(--gray-600); max-width: 620px; line-height: 1.65; margin-bottom: 2rem; }
@@ -67,16 +62,14 @@
   .section-tab.complete { background: var(--green-light); color: var(--green); }
   .section-tab.complete.active { background: var(--navy); color: var(--white); }
 
-  /* Section panels */
   .section-panel { display: none; }
   .section-panel.active { display: block; }
 
-  .section-heading { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 10px; border-bottom: 2px solid var(--navy); margin-bottom: 6px; }
+  .section-heading { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 10px; border-bottom: 2px solid var(--navy); margin-bottom: 8px; }
   .section-title { font-size: 20px; font-weight: 600; color: var(--navy); }
   .section-max { font-size: 13px; color: var(--gray-400); }
   .section-note { font-size: 13px; color: var(--gray-600); background: var(--navy-light); border-radius: var(--radius); padding: 8px 12px; margin-bottom: 1.25rem; line-height: 1.5; }
 
-  /* Indicators */
   .indicator { padding: 14px 0; border-bottom: 1px solid var(--gray-100); }
   .indicator:last-of-type { border-bottom: none; }
   .indicator-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
@@ -84,9 +77,14 @@
   .indicator-text { font-size: 14px; color: var(--gray-800); line-height: 1.55; flex: 1; }
   .help-btn { background: none; border: 1px solid var(--gray-200); border-radius: 20px; font-size: 11px; color: var(--gray-400); padding: 1px 8px; cursor: pointer; white-space: nowrap; margin-left: 8px; flex-shrink: 0; font-family: inherit; transition: all 0.15s; }
   .help-btn:hover { border-color: var(--teal); color: var(--teal); }
-  .help-box { display: none; font-size: 13px; color: var(--gray-600); background: var(--teal-light); border-left: 3px solid var(--teal-mid); padding: 8px 12px; border-radius: 0 var(--radius) var(--radius) 0; margin: 6px 0 6px 30px; line-height: 1.55; }
+  .help-box { display: none; font-size: 13px; color: var(--gray-700); background: var(--teal-light); border-left: 3px solid var(--teal-mid); padding: 10px 12px; border-radius: 0 var(--radius) var(--radius) 0; margin: 6px 0 6px 30px; line-height: 1.6; }
   .help-box.show { display: block; }
-  .help-loading { font-style: italic; color: var(--gray-400); }
+  .help-box p { margin-bottom: 6px; }
+  .help-box p:last-child { margin-bottom: 0; }
+  .help-score { font-weight: 600; }
+  .s0 { color: var(--red); }
+  .s1 { color: var(--amber); }
+  .s2 { color: var(--green); }
 
   .score-row { display: flex; gap: 6px; align-items: center; margin-left: 30px; flex-wrap: wrap; }
   .score-btn { width: 44px; height: 36px; border-radius: var(--radius); border: 1px solid var(--gray-200); background: var(--white); font-size: 14px; font-weight: 600; cursor: pointer; color: var(--gray-400); transition: all 0.12s; font-family: inherit; }
@@ -100,14 +98,12 @@
   .notes-field:focus { outline: none; border-color: var(--gray-400); }
   .notes-field::placeholder { color: var(--gray-400); }
 
-  /* Subtotal */
   .subtotal { display: flex; justify-content: space-between; align-items: center; background: var(--gray-100); border-radius: var(--radius); padding: 10px 14px; margin-top: 1.25rem; }
   .subtotal-label { font-size: 14px; color: var(--gray-600); font-weight: 500; }
   .subtotal-val { font-size: 18px; font-weight: 700; color: var(--navy); }
 
   .nav-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--gray-100); }
 
-  /* Buttons */
   .btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 18px; border-radius: var(--radius); font-size: 14px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: all 0.15s; font-family: inherit; }
   .btn-primary { background: var(--teal); color: var(--white); border-color: var(--teal); }
   .btn-primary:hover { background: #186860; }
@@ -119,7 +115,6 @@
   .btn:disabled { opacity: 0.45; cursor: not-allowed; }
   .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
 
-  /* Summary */
   .summary-banner { background: var(--navy); color: var(--white); border-radius: var(--radius-lg); padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
   .summary-label { font-size: 12px; opacity: 0.65; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
   .summary-big { font-size: 34px; font-weight: 700; }
@@ -135,7 +130,7 @@
   .bar-mid { background: var(--amber); height: 100%; border-radius: 2px; }
   .bar-low { background: var(--red); height: 100%; border-radius: 2px; }
 
-  .strengths-section { margin-bottom: 1.5rem; }
+  .strengths-section { margin-bottom: 1.25rem; }
   .strengths-label { font-size: 13px; font-weight: 600; color: var(--gray-600); margin-bottom: 6px; display: block; }
   textarea.strengths-input { width: 100%; min-height: 80px; padding: 10px 12px; border: 1px solid var(--gray-200); border-radius: var(--radius); font-size: 14px; font-family: inherit; color: var(--gray-800); background: var(--white); resize: vertical; line-height: 1.6; }
   textarea.strengths-input:focus { outline: none; border-color: var(--teal); }
@@ -143,15 +138,12 @@
 
   .divider { height: 1px; background: var(--gray-200); margin: 1.5rem 0; }
 
-  /* Toast */
   .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--navy); color: var(--white); padding: 10px 20px; border-radius: 20px; font-size: 13px; font-weight: 500; transition: transform 0.3s; z-index: 9999; pointer-events: none; white-space: nowrap; }
   .toast.show { transform: translateX(-50%) translateY(0); }
 
-  /* Status */
   .status { padding: 9px 13px; border-radius: var(--radius); font-size: 13px; margin: 10px 0; border: 1px solid; display: none; line-height: 1.5; }
   .status.show { display: block; }
   .status-error { background: var(--red-light); border-color: #d8a0a0; color: var(--red); }
-  .status-loading { background: #e8f0fe; border-color: #b8d0f8; color: #1a56c4; }
 </style>
 </head>
 <body>
@@ -173,11 +165,10 @@
 
 <main class="main">
 
-  <!-- INTRO -->
   <div class="step active" id="step-intro">
     <p class="intro-label">OLC Quality Scorecard Suite</p>
     <h1 class="intro-title">Course Review Scorecard</h1>
-    <p class="intro-desc">This end-of-semester self-assessment covers three areas: Essential Design (what's built into your course), Advanced Design (enhancements that elevate quality), and Course Delivery (how you facilitated the course). Click the &#x2753; button on any indicator for plain-language guidance on what each one means and what evidence looks like at each score level.</p>
+    <p class="intro-desc">This end-of-semester self-assessment covers three areas: Essential Design (what's built into your course), Advanced Design (enhancements that elevate quality), and Course Delivery (how you facilitated the course). Click the <strong>?</strong> button on any indicator for plain-language guidance on what each score level looks like in practice.</p>
 
     <div class="field-group">
       <label class="field-label" for="f-name">Your name</label>
@@ -193,21 +184,19 @@
     </div>
 
     <div class="btn-row" style="margin-top:1.5rem">
-      <button class="btn btn-primary" onclick="startReview()">Begin review &#8594;</button>
+      <button class="btn btn-primary" onclick="startReview()">Begin review &rarr;</button>
     </div>
   </div>
 
-  <!-- REVIEW -->
   <div class="step" id="step-review">
     <div class="section-tabs">
-      <button class="section-tab active" id="tab-essential" onclick="switchSection(0)">Essential Design<br><small style="font-weight:400;opacity:0.8">40 pts</small></button>
-      <button class="section-tab" id="tab-advanced" onclick="switchSection(1)">Advanced Design<br><small style="font-weight:400;opacity:0.8">30 pts</small></button>
-      <button class="section-tab" id="tab-delivery" onclick="switchSection(2)">Course Delivery<br><small style="font-weight:400;opacity:0.8">30 pts</small></button>
+      <button class="section-tab active" id="tab-0" onclick="switchSection(0)">Essential Design<br><small style="font-weight:400;opacity:0.8">40 pts</small></button>
+      <button class="section-tab" id="tab-1" onclick="switchSection(1)">Advanced Design<br><small style="font-weight:400;opacity:0.8">30 pts</small></button>
+      <button class="section-tab" id="tab-2" onclick="switchSection(2)">Course Delivery<br><small style="font-weight:400;opacity:0.8">30 pts</small></button>
     </div>
     <div id="section-panels"></div>
   </div>
 
-  <!-- SUMMARY -->
   <div class="step" id="step-summary">
     <div class="summary-banner">
       <div>
@@ -216,7 +205,7 @@
         <div class="summary-pct" id="sum-pct">0%</div>
       </div>
       <div style="text-align:right">
-        <div class="summary-label">Sections</div>
+        <div class="summary-label">Sections completed</div>
         <div class="summary-big" id="sum-sections">0 / 3</div>
       </div>
     </div>
@@ -235,14 +224,14 @@
     </div>
     <div class="strengths-section">
       <label class="strengths-label">Improvement plan</label>
-      <textarea class="strengths-input" id="sum-plan" placeholder="List 2–3 specific, actionable steps you plan to take before next semester."></textarea>
+      <textarea class="strengths-input" id="sum-plan" placeholder="List 2-3 specific, actionable steps you plan to take before next semester."></textarea>
     </div>
 
     <div id="export-status" class="status"></div>
 
     <div class="btn-row" style="margin-top:1.5rem">
-      <button class="btn btn-navy" onclick="goToStep('step-review')">&#8592; Back to review</button>
-      <button class="btn btn-primary" id="export-btn" onclick="exportDocx()">&#8595; Download Word doc</button>
+      <button class="btn btn-navy" onclick="goToStep('step-review')">&larr; Back to review</button>
+      <button class="btn btn-primary" id="export-btn" onclick="exportDocx()">&darr; Download Word doc</button>
     </div>
   </div>
 
@@ -250,101 +239,394 @@
 
 <script src="https://unpkg.com/docx@8.5.0/build/index.js"></script>
 <script>
+const GUIDANCE = [
+  // ESSENTIAL DESIGN (section 0, indicators 0-19)
+  [
+    {
+      what: "Your course has clearly written learning objectives or outcomes that tell students exactly what they will know or be able to do by the end of the course. Vague statements like 'students will understand' do not meet this standard.",
+      s0: "Objectives are missing, or use vague language like 'students will learn about' without specifying what they will actually be able to do.",
+      s1: "Objectives are present and reasonably clear but could be more specific or measurable — for example, 'students will analyze' without specifying what kind of analysis or in what context.",
+      s2: "Objectives use action verbs (analyze, evaluate, construct, demonstrate) and are specific enough that a student could clearly tell whether they have met them."
+    },
+    {
+      what: "Students can find everything they need for the course — readings, tools, platforms — in one place, with no guessing about what they are supposed to have or use.",
+      s0: "Required materials are scattered or incomplete; students have reported confusion about what they need or where to find it.",
+      s1: "Most required materials are listed but some tools or platforms are mentioned in passing without full explanation of how to access them.",
+      s2: "A complete list of all materials, tools, and platforms is clearly presented with access instructions, cost information, and any account setup steps required."
+    },
+    {
+      what: "Students know how and when to reach you, and what to expect in terms of response time. This includes office hours (virtual or in-person), preferred contact method, and how long it typically takes you to respond.",
+      s0: "Contact information is present but office hours, preferred contact method, or response time expectations are not stated.",
+      s1: "Office hours and contact preferences are listed, but response time expectations are vague or unstated.",
+      s2: "Office hours, preferred contact method, and a specific response time commitment are all clearly stated and easy to find in the course shell."
+    },
+    {
+      what: "Students know what to do when something goes wrong technically — whether that's a Canvas issue, a problem with a third-party tool, or a hardware question. They are not left to figure it out alone.",
+      s0: "No technical support information is provided; students would need to search independently for help.",
+      s1: "General technical support contact is listed (e.g., IT help desk) but no guidance is given for tool-specific issues students are likely to encounter.",
+      s2: "Course provides specific support resources for each major tool used, including where to get help for Canvas, any third-party platforms, and general computer issues."
+    },
+    {
+      what: "For every technology students are required to use, there is a guide or tutorial that walks them through how to use it — not just what it is.",
+      s0: "No tutorials or guides are provided; students are expected to figure out tools on their own.",
+      s1: "Some tools have guides but others do not; or guides exist but are hard to find.",
+      s2: "Every required tool has a clear, step-by-step guide or video tutorial available in the course shell before students are expected to use it."
+    },
+    {
+      what: "Students understand from the start how grading works, what counts as academic dishonesty in your course, and what happens if they submit work late. No surprises.",
+      s0: "One or more of these policies — grading, academic integrity, or late work — is missing or unclear.",
+      s1: "All three policies are present but one is vague or incomplete, such as a late policy that does not specify the penalty.",
+      s2: "Grading breakdown, academic integrity expectations (including AI policy if applicable), and late work consequences are all clearly stated with no ambiguity."
+    },
+    {
+      what: "Students with disabilities can find your accessibility statement and know exactly how to request accommodations — including who to contact and what the process looks like.",
+      s0: "No accessibility statement or accommodation information is present in the course.",
+      s1: "A general accommodation statement is present but does not tell students how to actually request accommodations or who to contact.",
+      s2: "Course includes a clear accessibility statement and specific steps students should take to request accommodations, including contact information for disability services."
+    },
+    {
+      what: "Students can easily find information about campus resources that support their success — tutoring, writing centers, counseling, food pantries, and similar services.",
+      s0: "No learner support information is included in the course.",
+      s1: "Some support services are mentioned but the list is incomplete or not easy to find.",
+      s2: "A comprehensive, up-to-date list of relevant learner support services is included and easy to locate in the course shell."
+    },
+    {
+      what: "Students have a complete, accurate schedule showing when every assignment, activity, quiz, and major project is due — not just a general weekly outline.",
+      s0: "No schedule is provided, or the schedule exists but is missing due dates for many items.",
+      s1: "A schedule is present with most due dates, but some assignments are missing or described vaguely.",
+      s2: "A complete course schedule with specific due dates and times for every graded item is clearly presented and accurate."
+    },
+    {
+      what: "The course provides a structured space for students to introduce themselves and to understand expectations for how they should interact with each other throughout the semester.",
+      s0: "No introduction activity or interaction guidelines exist in the course.",
+      s1: "An introduction activity is present but no guidelines for student interaction are provided, or vice versa.",
+      s2: "The course has a welcoming introductory discussion activity and clear, specific guidelines for how students are expected to interact with peers and with the instructor."
+    },
+    {
+      what: "A student navigating your course for the first time can find what they need without getting lost. Module names, navigation menus, and course organization follow a consistent, predictable pattern.",
+      s0: "Course navigation is inconsistent or confusing; modules are named differently, items are hard to find, or the layout changes from week to week.",
+      s1: "Navigation is mostly consistent but has some irregular elements that could cause confusion, such as inconsistent module naming or items posted outside the expected structure.",
+      s2: "Course navigation is completely consistent throughout — same structure every week, clearly labeled modules, and a layout that a student could learn once and rely on all semester."
+    },
+    {
+      what: "Videos and other media in the course are clear, relevant, and an appropriate length for the content they cover. Students are not sitting through poor-quality or excessively long recordings.",
+      s0: "Videos are difficult to hear or see, significantly outdated, or routinely much longer than the content requires.",
+      s1: "Most videos are adequate quality and reasonable length, but some are noticeably too long, poor quality, or not clearly connected to course content.",
+      s2: "All videos and media are clear, relevant to the specific learning objectives they support, and appropriately scoped in length for what they cover."
+    },
+    {
+      what: "Your course content reflects current information and is directly connected to what students are supposed to learn. Outdated examples, broken links, or content that does not connect to your objectives undermines student confidence.",
+      s0: "Course content contains noticeably outdated information, irrelevant material, or content with no clear connection to stated learning objectives.",
+      s1: "Content is mostly current and relevant but includes some items that are outdated or whose connection to course objectives is not clearly explained.",
+      s2: "All course content is current, accurate, and explicitly tied to specific learning objectives so students understand why they are engaging with it."
+    },
+    {
+      what: "Students can see all of their grades in one organized place, and every graded item in the course is represented there — no missing assignments, no grades posted in comments instead of the gradebook.",
+      s0: "Gradebook is disorganized, missing assignments, or grades are posted inconsistently outside of the gradebook.",
+      s1: "Gradebook includes most assignments but is missing some items, or grading is occasionally inconsistent.",
+      s2: "Gradebook is fully set up, includes every graded item, and provides students with an accurate running picture of their standing in the course."
+    },
+    {
+      what: "The course includes regular low-stakes activities — quizzes, check-ins, short responses — that help students gauge their own understanding before major assessments.",
+      s0: "No formative or low-stakes assessments exist; students only receive feedback on major graded work.",
+      s1: "Some low-stakes assessments are present but they are infrequent or not well connected to helping students prepare for larger assessments.",
+      s2: "Regular, low-stakes formative activities are built throughout the course and clearly designed to help students check their understanding and prepare for summative work."
+    },
+    {
+      what: "Major assignments are built up through smaller steps — drafts, outlines, milestone submissions — rather than assigned all at once with a single due date at the end.",
+      s0: "Major assignments are presented as single deliverables with no scaffolding or intermediate steps.",
+      s1: "Some scaffolding exists for major assignments but it is inconsistent — some projects have it and others do not.",
+      s2: "All significant assessments are broken into clear, scaffolded steps that build on each other, giving students structured support throughout the process."
+    },
+    {
+      what: "Every assignment, activity, and module contains instructions clear enough that a student could complete it without needing to email you for clarification.",
+      s0: "Instructions are frequently vague, incomplete, or missing — students regularly need to ask for clarification on what is expected.",
+      s1: "Most instructions are adequate, but some assignments lack key details about format, length, submission method, or evaluation criteria.",
+      s2: "Every item in the course has complete, unambiguous instructions covering what to do, how to submit, when it is due, and how it will be evaluated."
+    },
+    {
+      what: "Every assignment that is graded has a rubric that tells students exactly what you are looking for and how you will evaluate their work.",
+      s0: "Rubrics are absent from most or all assignments; students do not know how their work will be evaluated.",
+      s1: "Rubrics are present for some assignments but missing for others, or existing rubrics are vague about what distinguishes one performance level from another.",
+      s2: "Every graded assignment has a rubric with clear, specific criteria that students can use to self-assess before submitting."
+    },
+    {
+      what: "The amount of work assigned each week is appropriate for the credit hours of the course and is distributed evenly enough that students are not overwhelmed one week and idle the next.",
+      s0: "Workload is clearly uneven — some weeks are significantly heavier than others — or the overall amount of work is not appropriate for the course level.",
+      s1: "Workload is roughly appropriate but has some noticeable spikes, such as multiple major deadlines in the same week.",
+      s2: "Workload is thoughtfully distributed throughout the semester, appropriate for the course level, and adjusted based on student feedback when needed."
+    },
+    {
+      what: "Links work. Names are spelled correctly. Dates are accurate. The course has been reviewed before students encounter it.",
+      s0: "The course has multiple broken links, spelling errors, or incorrect dates that students have encountered.",
+      s1: "The course is mostly clean but has a few broken links or minor errors that have not yet been corrected.",
+      s2: "Course materials have been reviewed carefully and are free of broken links, spelling errors, and outdated or incorrect information."
+    }
+  ],
+  // ADVANCED DESIGN (section 1, indicators 0-14)
+  [
+    {
+      what: "Learning objectives are written from the student's perspective — describing what the learner will be able to do — rather than what the instructor will cover or what the course will teach.",
+      s0: "Objectives are written from the instructor's perspective: 'This course will cover...' or 'Students will be introduced to...'",
+      s1: "Objectives use action verbs but still feel instructor-focused, or mix learner-centered language with content-coverage language.",
+      s2: "All objectives are written from the student's point of view using clear action verbs: 'By the end of this course, you will be able to...'"
+    },
+    {
+      what: "Before the course begins, students can check whether their technology is set up correctly and assess their readiness for online learning — so technical problems surface before they affect grades.",
+      s0: "No technology checklist or readiness quiz exists; students discover problems after the course has started.",
+      s1: "A technology checklist or readiness resource is available but it is not interactive or not clearly connected to the course.",
+      s2: "Course includes a pre-course technology checklist students can complete to verify their setup, and an online readiness self-assessment that helps them gauge their preparedness."
+    },
+    {
+      what: "A new student can figure out how the course works — where to find things, how modules are structured, what a typical week looks like — without needing to email you.",
+      s0: "No orientation or course navigation guide exists; students are dropped into the course without context.",
+      s1: "Some orientation materials exist but they are incomplete or hard to find.",
+      s2: "Course includes a dedicated orientation module, welcome video, or navigation guide that walks students through the course structure before they begin the first unit."
+    },
+    {
+      what: "The course explicitly addresses how students may and may not use generative AI tools — not just a blanket prohibition or permission, but clear guidance that helps students make informed decisions.",
+      s0: "No AI guidelines exist in the course, or the policy is simply 'no AI' with no further explanation.",
+      s1: "An AI policy exists but it is vague about what is permitted, what is prohibited, and why — leaving students uncertain in ambiguous situations.",
+      s2: "Course includes clear, specific guidelines that explain what AI tools are permitted, in what contexts, for what purposes, and what appropriate attribution or disclosure looks like."
+    },
+    {
+      what: "Students are not required to purchase expensive textbooks or pay for tools. All course materials are freely available or very low cost.",
+      s0: "Course requires students to purchase a textbook or pay for tools without clear justification for why free alternatives were not used.",
+      s1: "Course uses mostly free materials but requires purchase of at least one item that has a freely available alternative.",
+      s2: "All required materials are free or very low cost — open educational resources, library materials, free tools — with no unexpected expenses for students."
+    },
+    {
+      what: "Students are not locked into a single way of demonstrating what they know. The course offers options — in format, modality, or approach — so that different learners can show mastery in ways that work for them.",
+      s0: "Every student must complete every assignment in exactly the same way with no alternatives.",
+      s1: "Some flexibility exists but it is limited — such as a choice between two very similar options on one assignment.",
+      s2: "Course provides meaningful choices across multiple assignments — for example, students can choose between written, visual, or recorded formats — allowing genuine differentiation."
+    },
+    {
+      what: "Examples, scenarios, and materials in the course reflect a range of cultural backgrounds, experiences, and identities — not a single default perspective.",
+      s0: "Course content draws predominantly from one cultural perspective or demographic group without acknowledgment of other viewpoints.",
+      s1: "Course includes some diverse examples but they feel tokenistic or are concentrated in one unit rather than woven throughout.",
+      s2: "Examples, case studies, and materials throughout the course meaningfully represent a range of backgrounds, so all students can see their experiences reflected."
+    },
+    {
+      what: "Students have a dedicated space to ask questions about course content or logistics that are not covered in the syllabus — a place where confusion can surface without requiring a private email.",
+      s0: "No such forum exists; students can only contact the instructor privately or search for answers independently.",
+      s1: "A Q&A space exists but students do not use it regularly, or it is not clearly positioned as the place for course questions.",
+      s2: "Course has an active, well-introduced Q&A or 'muddiest point' forum that students use regularly and where the instructor responds visibly and promptly."
+    },
+    {
+      what: "The course adapts to individual student needs in some way — whether through branching content, optional paths, or differentiated resources — rather than requiring everyone to move through identical content at the same pace.",
+      s0: "All students follow the exact same path through identical content with no adaptive elements.",
+      s1: "Some differentiation exists — such as optional readings or extension activities — but it is not well integrated or clearly communicated.",
+      s2: "Course incorporates intentional adaptive elements: for example, different resource tracks based on prior knowledge, optional scaffolding for students who need it, or branching paths based on self-assessment results."
+    },
+    {
+      what: "Written course materials — pages, documents, readings — meet accessibility standards: proper heading structure, sufficient color contrast, alt text for images, and readable fonts.",
+      s0: "Text materials have known accessibility issues — missing headings, poor contrast, images without alt text — that create barriers for some students.",
+      s1: "Most text materials are accessible, but some have unresolved issues such as missing alt text or inconsistent heading structure.",
+      s2: "All text materials meet accessibility standards and have been reviewed with an accessibility checker such as UDOIT, with issues resolved."
+    },
+    {
+      what: "Videos and other media in the course are captioned, have transcripts available, and meet quality standards so that students with disabilities can access them fully.",
+      s0: "Videos are uncaptioned or captions are auto-generated and not reviewed for accuracy.",
+      s1: "Most videos are captioned but some are not, or captions exist but contain significant errors.",
+      s2: "All videos are captioned with reviewed, accurate captions. Transcripts are available for audio content. No student is excluded from any media due to an accessibility gap."
+    },
+    {
+      what: "Students are not just consumers of course content — they have at least one opportunity to contribute something meaningful to the course itself, such as curating resources, creating content for peers, or shaping a discussion.",
+      s0: "Students have no opportunity to contribute to course content; all materials are instructor-created.",
+      s1: "Students produce work that could theoretically be shared but it is not actually incorporated into the course for other students to use.",
+      s2: "Course includes a structured opportunity for students to contribute meaningfully — for example, a student-curated resource library, peer-created content, or a discussion students help shape."
+    },
+    {
+      what: "Before students submit major assignments, they can see an example of what a strong submission looks like — so they understand the standard they are working toward.",
+      s0: "No model or exemplar is provided for any major assessment.",
+      s1: "Some examples exist but they are generic, incomplete, or not connected clearly to the specific assignment criteria.",
+      s2: "Strong, annotated examples are provided for all major assessments, showing students what exemplary work looks like and why it meets the standard."
+    },
+    {
+      what: "Assessments ask students to apply what they are learning to real situations, problems, or contexts — not just to recall information or perform an academic exercise disconnected from actual practice.",
+      s0: "Most assessments are knowledge-recall focused with little connection to real-world application.",
+      s1: "Some assessments include real-world application, but others remain abstract or disconnected from practical use.",
+      s2: "The majority of assessments ask students to solve real problems, make real decisions, or produce something with genuine utility — connecting course learning to their lives or future work."
+    },
+    {
+      what: "The course builds in deliberate moments for students to reflect on their own learning — what they understand, what they are still working on, and how they are growing as learners.",
+      s0: "No self-reflection activities exist in the course; students are never asked to assess their own learning.",
+      s1: "Some reflection activities exist but they are infrequent or feel like add-ons rather than integrated into the course design.",
+      s2: "Regular, purposeful self-reflection activities are embedded throughout the course — such as weekly check-ins, metacognitive journals, or end-of-module self-assessments — that help students develop as independent learners."
+    }
+  ],
+  // COURSE DELIVERY (section 2, indicators 0-14)
+  [
+    {
+      what: "At the start of the course, students received a personal, human introduction from you — not just a syllabus. This could be a welcome video, a written introduction, or an announcement that establishes your presence and sets the tone.",
+      s0: "No personal introduction was provided; students started the course without any direct welcome from the instructor.",
+      s1: "A welcome message was posted but it was brief, generic, or felt impersonal.",
+      s2: "Students received a warm, personal introduction that established the instructor's voice, communicated enthusiasm for the course, and helped students feel welcomed."
+    },
+    {
+      what: "Course content, modules, and materials were available when students needed them — not posted late, not released after the relevant week had already started.",
+      s0: "Modules or content were regularly posted late, causing students to miss deadlines or scramble to catch up.",
+      s1: "Content was mostly available on time but there were some late releases that inconvenienced students.",
+      s2: "All course content was available ahead of when students needed it, with no instances of late releases affecting student work."
+    },
+    {
+      what: "Announcements were used regularly throughout the semester to keep students informed — not just at the start of the course. Students felt consistently updated about what was coming, what had changed, and what you wanted them to focus on.",
+      s0: "Announcements were rarely posted after the first week, or were only used for urgent notices rather than regular communication.",
+      s1: "Announcements were posted periodically but inconsistently, with long gaps that left students without a sense of instructor presence.",
+      s2: "Regular, relevant announcements were posted throughout the semester — weekly or more — keeping students informed, oriented, and connected to the instructor."
+    },
+    {
+      what: "You were an active participant in course discussions and online activities — not just an observer. Students could see your presence in conversations, not just in grades.",
+      s0: "Instructor rarely or never participated in online discussions or activities; students had no sense of instructor engagement with their work.",
+      s1: "Instructor occasionally commented in discussions or activities, but participation was sporadic and did not feel sustained.",
+      s2: "Instructor was a consistent, meaningful presence in online activities — asking follow-up questions, connecting student contributions to course themes, and modeling the kind of engagement expected."
+    },
+    {
+      what: "Feedback on assignments went beyond a grade or a score. Students received comments specific to their work that helped them understand what they did well and what to improve.",
+      s0: "Feedback was limited to grades or generic comments that did not address the specifics of individual student work.",
+      s1: "Some assignments received meaningful feedback, but others received only grades or brief, generic comments.",
+      s2: "All major assignments received specific, targeted feedback that addressed the student's individual work, named strengths, and offered concrete guidance for improvement."
+    },
+    {
+      what: "Grades and feedback were returned within the timeframe communicated to students — typically within one week of the due date, or whatever standard was set in the syllabus.",
+      s0: "Grades were frequently returned late, sometimes weeks after submission, without communication about delays.",
+      s1: "Grades were usually returned on time, but there were some delays that were not communicated to students in advance.",
+      s2: "Grades and feedback were consistently returned within the committed timeframe. When delays occurred, students were notified proactively."
+    },
+    {
+      what: "When students were struggling — missing assignments, declining grades, reduced participation — you reached out to them rather than waiting for them to come to you.",
+      s0: "Students who were struggling received no outreach; instructor waited for students to self-identify or reach out independently.",
+      s1: "Some outreach occurred but it was inconsistent — some students in distress were contacted and others were not.",
+      s2: "Instructor proactively reached out to students showing signs of struggle — through Canvas messaging, early alert systems, or direct communication — offering support before the situation became critical."
+    },
+    {
+      what: "Your written communications — feedback, announcements, emails, discussion responses — used language that was encouraging, respectful, and constructive, even when addressing errors or problems.",
+      s0: "Some communications were phrased in ways students experienced as dismissive, discouraging, or not supportive.",
+      s1: "Most communications were supportive, but occasional messages lacked warmth or felt more transactional than encouraging.",
+      s2: "All instructor communications consistently used a positive, supportive tone — even when giving critical feedback — making students feel respected and motivated to improve."
+    },
+    {
+      what: "Students were actively encouraged to use office hours — and not just told they exist. You made office hours feel accessible and useful, not intimidating or unnecessary.",
+      s0: "Office hours were listed but never mentioned again; no effort was made to encourage students to use them.",
+      s1: "Office hours were occasionally mentioned, but without specific invitation or clear communication about what they are for.",
+      s2: "Instructor actively and regularly encouraged office hours — naming specific reasons to come, offering flexible scheduling, and making students feel that using them was a normal and welcome part of the course."
+    },
+    {
+      what: "When students sent you messages, they heard back within the timeframe you committed to in the syllabus. Students did not have to wonder whether you received their message.",
+      s0: "Response times were frequently longer than communicated, or some student messages went unanswered.",
+      s1: "Most messages were answered within the committed timeframe, with occasional lapses.",
+      s2: "Student communications were consistently answered within the committed timeframe throughout the semester, with proactive communication when delays were unavoidable."
+    },
+    {
+      what: "At the end of each module or unit, students received some form of synthesis or closure — a summary, a wrap-up announcement, or a reflection prompt — that connected their contributions back to the learning objectives.",
+      s0: "Modules ended without any wrap-up; students moved from one unit to the next with no synthesis or closure.",
+      s1: "Some modules had wrap-up summaries, but others ended abruptly with no connection of student contributions to course themes.",
+      s2: "Every module concluded with a meaningful summary or synthesis that drew on student contributions and connected the unit's work to larger course objectives."
+    },
+    {
+      what: "You actively created conditions for students to interact with each other — not just with you. Discussion design, group activities, and peer feedback were structured to promote genuine student-to-student connection.",
+      s0: "Online activities were primarily student-to-instructor; little structure existed to facilitate student-to-student interaction.",
+      s1: "Some peer interaction was built in, but it felt superficial or was not clearly encouraged by the instructor.",
+      s2: "Instructor actively structured and encouraged learner-to-learner engagement — through thoughtful discussion design, peer review, collaborative activities — and participated in a way that modeled the value of peer connection."
+    },
+    {
+      what: "When student needs or circumstances required it, you adjusted course content, assignments, or deadlines rather than applying policies rigidly without regard for context.",
+      s0: "Course policies were applied rigidly regardless of student circumstances; no adjustments were made even when clearly warranted.",
+      s1: "Some adjustments were made when students asked, but the instructor was not proactive about identifying when changes would benefit the class.",
+      s2: "Instructor regularly assessed whether course plans were serving students well and made thoughtful adjustments — to pacing, assignment design, or deadlines — in response to actual learner needs."
+    },
+    {
+      what: "You asked students for feedback about the course at more than one point in the semester — not just at the end. Students had an opportunity to influence the course while it was still happening.",
+      s0: "No mid-course feedback was solicited; instructor only collected feedback at the end of the semester (or not at all).",
+      s1: "Feedback was solicited at one mid-course point, but the results did not visibly influence anything students could see.",
+      s2: "Instructor collected student feedback at multiple points — early, mid, and late in the semester — and communicated back to students what was heard and what would change as a result."
+    },
+    {
+      what: "You brought yourself into the course — sharing your own experiences, examples from your own practice, or personal perspectives that connected course content to real life and helped students see you as a person, not just a role.",
+      s0: "Instructor presence was entirely formal and role-based; no personal examples or perspectives were shared.",
+      s1: "Occasional personal examples were included, but they were rare or felt incidental rather than intentional.",
+      s2: "Instructor regularly incorporated personal examples, professional experiences, or genuine reactions to course material that made content more relatable and demonstrated authentic engagement with the subject."
+    }
+  ]
+];
+
 const SECTIONS = [
-  {
-    id: 'essential',
-    label: 'Essential Design',
-    max: 40,
-    note: 'These items evaluate fundamental course components. This section can be completed before or after the course has run.',
-    indicators: [
-      'Learning objectives and/or outcomes are specific, measurable, and clearly defined.',
-      'Course lists all required learning materials, including technology tools.',
-      'Course provides office hours, communication preferences, and response times.',
-      'Course provides technical support resources and help for common technical issues.',
-      'Course includes step-by-step guides or tutorials for all required technologies.',
-      'Course defines grading policies, academic integrity expectations, and late policies.',
-      'Course provides an accessibility statement and steps to request accommodations.',
-      'Course includes information for relevant learner support and other services.',
-      'Course includes a course schedule with due dates for all assignments and activities.',
-      'Course includes an introductory discussion and guidelines for student interactions.',
-      'Course site navigation and layout are clear and consistent.',
-      'Videos and other multimedia content are of appropriate quality and length.',
-      'Course content is up-to-date, relevant, and tied to specific learning objectives.',
-      'Course site provides an organized gradebook that includes all assessments.',
-      'Course incorporates formative, low-stakes assessments for frequent engagement.',
-      'Course provides a scaffolded approach for summative assessments.',
-      'All modules, assignments, and activities include clear and detailed instructions.',
-      'Course includes rubrics for all assignments and assessments.',
-      'Course workload is balanced and appropriate for the discipline and course level.',
-      'Course materials are free of broken links, spelling errors, and incorrect information.'
-    ]
-  },
-  {
-    id: 'advanced',
-    label: 'Advanced Design',
-    max: 30,
-    note: 'These items encourage enhancements beyond the essentials. This section can be completed at any stage to elevate course quality.',
-    indicators: [
-      'Course learning objectives and/or outcomes use learner-centered language.',
-      'Course includes a pre-course technology checklist and online readiness quiz.',
-      'Course includes an orientation module, video, or guide to navigating the course.',
-      'Course includes explicit guidelines for using generative AI.',
-      'Course uses exclusively low- or no-cost materials.',
-      'Course provides multiple pathways for learners to meet learning objectives.',
-      'Content includes examples that represent a range of learner backgrounds.',
-      'Course includes an online forum for muddiest points or questions about the course.',
-      'Course incorporates adaptive learning strategies to personalize learning.',
-      'Text materials meet accessibility and Universal Design standards.',
-      'Videos and other multimedia content meet accessibility standards.',
-      'Course includes ways for learners to contribute meaningfully to course content.',
-      'Course includes model deliverables for summative assessments.',
-      'Course includes assessments with practical, real-world applications.',
-      'Course supports learner metacognition through periodic self-reflection activities.'
-    ]
-  },
-  {
-    id: 'delivery',
-    label: 'Course Delivery',
-    max: 30,
-    note: 'These items assess how the course was facilitated. This section should only be completed after the course has been taught.',
-    indicators: [
-      'Instructor provides a personal introduction to the course.',
-      'Instructor releases modules and content in the course site in a timely manner.',
-      'Instructor posts regular and relevant announcements on the course site.',
-      'Instructor contributes meaningfully to online activities and discussions.',
-      'Instructor provides specific and targeted feedback on assignments.',
-      'Instructor provides feedback and grades on assessments in a timely manner.',
-      'Instructor actively engages with learners who show signs of struggle in the course.',
-      'Instructor uses supportive language in all feedback and communications.',
-      'Instructor encourages or incentivizes learners to participate in office hours.',
-      'Instructor responds to student communications and inquiries in a timely manner.',
-      'Instructor provides end-of-module summaries based upon learner contributions.',
-      'Instructor encourages learner-to-learner engagement in online activities.',
-      'Instructor adjusts content, assignments, and dates in response to learner needs.',
-      'Instructor solicits learner feedback about the course at multiple points in the term.',
-      'Instructor incorporates personal examples to supplement course content.'
-    ]
-  }
+  { id:'essential', label:'Essential Design', max:40, note:'These items evaluate fundamental course components. This section can be completed before or after the course has run.' },
+  { id:'advanced', label:'Advanced Design', max:30, note:'These items encourage enhancements beyond the essentials. This section can be completed at any stage to elevate course quality.' },
+  { id:'delivery', label:'Course Delivery', max:30, note:'These items assess how the course was facilitated. This section should only be completed after the course has been taught.' }
+];
+
+const INDICATORS = [
+  [
+    'Learning objectives and/or outcomes are specific, measurable, and clearly defined.',
+    'Course lists all required learning materials, including technology tools.',
+    'Course provides office hours, communication preferences, and response times.',
+    'Course provides technical support resources and help for common technical issues.',
+    'Course includes step-by-step guides or tutorials for all required technologies.',
+    'Course defines grading policies, academic integrity expectations, and late policies.',
+    'Course provides an accessibility statement and steps to request accommodations.',
+    'Course includes information for relevant learner support and other services.',
+    'Course includes a course schedule with due dates for all assignments and activities.',
+    'Course includes an introductory discussion and guidelines for student interactions.',
+    'Course site navigation and layout are clear and consistent.',
+    'Videos and other multimedia content are of appropriate quality and length.',
+    'Course content is up-to-date, relevant, and tied to specific learning objectives.',
+    'Course site provides an organized gradebook that includes all assessments.',
+    'Course incorporates formative, low-stakes assessments for frequent engagement.',
+    'Course provides a scaffolded approach for summative assessments.',
+    'All modules, assignments, and activities include clear and detailed instructions.',
+    'Course includes rubrics for all assignments and assessments.',
+    'Course workload is balanced and appropriate for the discipline and course level.',
+    'Course materials are free of broken links, spelling errors, and incorrect information.'
+  ],
+  [
+    'Course learning objectives and/or outcomes use learner-centered language.',
+    'Course includes a pre-course technology checklist and online readiness quiz.',
+    'Course includes an orientation module, video, or guide to navigating the course.',
+    'Course includes explicit guidelines for using generative AI.',
+    'Course uses exclusively low- or no-cost materials.',
+    'Course provides multiple pathways for learners to meet learning objectives.',
+    'Content includes examples that represent a range of learner backgrounds.',
+    'Course includes an online forum for muddiest points or questions about the course.',
+    'Course incorporates adaptive learning strategies to personalize learning.',
+    'Text materials meet accessibility and Universal Design standards.',
+    'Videos and other multimedia content meet accessibility standards.',
+    'Course includes ways for learners to contribute meaningfully to course content.',
+    'Course includes model deliverables for summative assessments.',
+    'Course includes assessments with practical, real-world applications.',
+    'Course supports learner metacognition through periodic self-reflection activities.'
+  ],
+  [
+    'Instructor provides a personal introduction to the course.',
+    'Instructor releases modules and content in the course site in a timely manner.',
+    'Instructor posts regular and relevant announcements on the course site.',
+    'Instructor contributes meaningfully to online activities and discussions.',
+    'Instructor provides specific and targeted feedback on assignments.',
+    'Instructor provides feedback and grades on assessments in a timely manner.',
+    'Instructor actively engages with learners who show signs of struggle in the course.',
+    'Instructor uses supportive language in all feedback and communications.',
+    'Instructor encourages or incentivizes learners to participate in office hours.',
+    'Instructor responds to student communications and inquiries in a timely manner.',
+    'Instructor provides end-of-module summaries based upon learner contributions.',
+    'Instructor encourages learner-to-learner engagement in online activities.',
+    'Instructor adjusts content, assignments, and dates in response to learner needs.',
+    'Instructor solicits learner feedback about the course at multiple points in the term.',
+    'Instructor incorporates personal examples to supplement course content.'
+  ]
 ];
 
 let scores = {};
 let notes = {};
-let helpCache = {};
 let currentSection = 0;
 
-const key = (sIdx, iIdx) => `${sIdx}_${iIdx}`;
+const key = (si, ii) => si + '_' + ii;
 
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2500);
-}
-
-function setStatus(id, msg, type) {
-  const el = document.getElementById(id);
-  el.className = 'status' + (msg ? ' show status-' + type : '');
-  el.innerHTML = msg || '';
 }
 
 function startReview() {
@@ -356,100 +638,51 @@ function startReview() {
 function buildReview() {
   const container = document.getElementById('section-panels');
   container.innerHTML = '';
-
   SECTIONS.forEach((sec, si) => {
     const panel = document.createElement('div');
     panel.id = 'panel-' + si;
     panel.className = 'section-panel' + (si === 0 ? ' active' : '');
-
-    let html = `<div class="section-heading">
-      <span class="section-title">${sec.label}</span>
-      <span class="section-max">out of ${sec.max} points</span>
-    </div>
-    <div class="section-note">${sec.note}</div>`;
-
-    sec.indicators.forEach((ind, ii) => {
+    let html = '<div class="section-heading"><span class="section-title">' + sec.label + '</span><span class="section-max">out of ' + sec.max + ' points</span></div>';
+    html += '<div class="section-note">' + sec.note + '</div>';
+    INDICATORS[si].forEach((ind, ii) => {
       const k = key(si, ii);
       const sc = scores[k];
-      html += `<div class="indicator" id="ind-${k}">
-        <div class="indicator-header">
-          <span class="indicator-num">${ii + 1}</span>
-          <span class="indicator-text">${ind}</span>
-          <button class="help-btn" onclick="toggleHelp('${k}', ${si}, ${ii})" aria-label="What does this mean?">&#x2753; What does this mean?</button>
-        </div>
-        <div class="help-box" id="help-${k}"></div>
-        <div class="score-row">
-          ${[0,1,2].map(n => `<button class="score-btn ${sc === n ? 'sel-' + n : ''}" onclick="setScore('${k}', ${n}, ${si})" aria-label="Score ${n}">${n}</button>`).join('')}
-          <span class="score-legend">0 = developing &nbsp;·&nbsp; 1 = accomplished &nbsp;·&nbsp; 2 = exemplary</span>
-        </div>
-        <textarea class="notes-field" id="notes-${k}" placeholder="Evidence or notes (optional)…" rows="1" oninput="saveNotes('${k}')">${notes[k] || ''}</textarea>
-      </div>`;
+      html += '<div class="indicator" id="ind-' + k + '">';
+      html += '<div class="indicator-header"><span class="indicator-num">' + (ii+1) + '</span>';
+      html += '<span class="indicator-text">' + ind + '</span>';
+      html += '<button class="help-btn" onclick="toggleHelp(\'' + k + '\',' + si + ',' + ii + ')">? What does this mean?</button></div>';
+      html += '<div class="help-box" id="help-' + k + '"></div>';
+      html += '<div class="score-row">';
+      [0,1,2].forEach(n => {
+        html += '<button class="score-btn ' + (sc === n ? 'sel-' + n : '') + '" onclick="setScore(\'' + k + '\',' + n + ',' + si + ')">' + n + '</button>';
+      });
+      html += '<span class="score-legend">0 = developing &nbsp;&middot;&nbsp; 1 = accomplished &nbsp;&middot;&nbsp; 2 = exemplary</span></div>';
+      html += '<textarea class="notes-field" id="notes-' + k + '" placeholder="Evidence or notes (optional)&hellip;" rows="1" oninput="saveNotes(\'' + k + '\')">' + (notes[k] || '') + '</textarea>';
+      html += '</div>';
     });
-
-    html += `<div class="subtotal">
-      <span class="subtotal-label">Subtotal</span>
-      <span class="subtotal-val" id="sub-${si}">0 / ${sec.max}</span>
-    </div>
-    <div class="nav-footer">
-      ${si > 0 ? `<button class="btn btn-secondary" onclick="switchSection(${si - 1})">&#8592; Previous</button>` : '<span></span>'}
-      ${si < SECTIONS.length - 1
-        ? `<button class="btn btn-primary" onclick="switchSection(${si + 1})">Next &#8594;</button>`
-        : `<button class="btn btn-navy" onclick="goToSummary()">View summary &#8594;</button>`}
-    </div>`;
-
+    html += '<div class="subtotal"><span class="subtotal-label">Subtotal</span><span class="subtotal-val" id="sub-' + si + '">0 / ' + sec.max + '</span></div>';
+    html += '<div class="nav-footer">';
+    html += si > 0 ? '<button class="btn btn-secondary" onclick="switchSection(' + (si-1) + ')">&larr; Previous</button>' : '<span></span>';
+    html += si < SECTIONS.length - 1
+      ? '<button class="btn btn-primary" onclick="switchSection(' + (si+1) + ')">Next &rarr;</button>'
+      : '<button class="btn btn-navy" onclick="goToSummary()">View summary &rarr;</button>';
+    html += '</div>';
     panel.innerHTML = html;
     container.appendChild(panel);
   });
-
   updateAllSubtotals();
   updateProgress();
 }
 
-async function toggleHelp(k, si, ii) {
+function toggleHelp(k, si, ii) {
   const box = document.getElementById('help-' + k);
-  if (box.classList.contains('show')) {
-    box.classList.remove('show');
-    return;
-  }
+  if (box.classList.contains('show')) { box.classList.remove('show'); return; }
+  const g = GUIDANCE[si][ii];
+  box.innerHTML = '<p>' + g.what + '</p>'
+    + '<p><span class="help-score s0">0 \u2013 Developing:</span> ' + g.s0 + '</p>'
+    + '<p><span class="help-score s1">1 \u2013 Accomplished:</span> ' + g.s1 + '</p>'
+    + '<p><span class="help-score s2">2 \u2013 Exemplary:</span> ' + g.s2 + '</p>';
   box.classList.add('show');
-  if (helpCache[k]) { box.innerHTML = helpCache[k]; return; }
-
-  const ind = SECTIONS[si].indicators[ii];
-  const section = SECTIONS[si].label;
-  box.innerHTML = '<span class="help-loading">Loading guidance…</span>';
-
-  try {
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 1000,
-        messages: [{
-          role: 'user',
-          content: `You are helping a college adjunct instructor self-assess their online course using the OLC Course Review Scorecard.
-
-Section: ${section}
-Indicator: "${ind}"
-
-Write a brief, plain-language explanation (3–5 sentences) of what this indicator means in practice for a community college online course. Then give one concrete example of what each score level looks like:
-
-- 0 (Developing): [one sentence example of what's missing or insufficient]
-- 1 (Accomplished): [one sentence example of what adequately meets this]  
-- 2 (Exemplary): [one sentence example of what thoroughly meets this]
-
-Keep the tone collegial and helpful, not evaluative. No preamble.`
-        }]
-      })
-    });
-    const data = await resp.json();
-    if (data.error) throw new Error(data.error.message);
-    const text = data.content.map(b => b.text || '').join('');
-    helpCache[k] = text;
-    box.innerHTML = text.replace(/\n/g, '<br>');
-  } catch(e) {
-    box.innerHTML = 'Could not load guidance. Please score based on your own judgment.';
-  }
 }
 
 function setScore(k, n, si) {
@@ -469,7 +702,7 @@ function saveNotes(k) {
 }
 
 function getSubtotal(si) {
-  return SECTIONS[si].indicators.reduce((sum, _, ii) => sum + (scores[key(si, ii)] || 0), 0);
+  return INDICATORS[si].reduce((sum, _, ii) => sum + (scores[key(si,ii)] || 0), 0);
 }
 
 function updateSubtotal(si) {
@@ -482,10 +715,8 @@ function updateAllSubtotals() { SECTIONS.forEach((_, i) => updateSubtotal(i)); }
 function getTotal() { return SECTIONS.reduce((sum, _, i) => sum + getSubtotal(i), 0); }
 
 function updateTab(si) {
-  const sec = SECTIONS[si];
-  const anyScored = sec.indicators.some((_, ii) => scores[key(si, ii)] !== undefined);
-  const tabs = ['tab-essential', 'tab-advanced', 'tab-delivery'];
-  const tab = document.getElementById(tabs[si]);
+  const anyScored = INDICATORS[si].some((_, ii) => scores[key(si,ii)] !== undefined);
+  const tab = document.getElementById('tab-' + si);
   if (!tab) return;
   const isActive = tab.classList.contains('active');
   tab.className = 'section-tab' + (anyScored ? ' complete' : '') + (isActive ? ' active' : '');
@@ -494,24 +725,21 @@ function updateTab(si) {
 function updateProgress() {
   const total = getTotal();
   const scored = Object.keys(scores).length;
-  const totalIndicators = SECTIONS.reduce((s, sec) => s + sec.indicators.length, 0);
-  const pct = Math.round((scored / totalIndicators) * 100);
+  const totalInd = INDICATORS.reduce((s, arr) => s + arr.length, 0);
+  const pct = Math.round((scored / totalInd) * 100);
   document.getElementById('prog-fill').style.width = pct + '%';
-  document.getElementById('prog-label').textContent = scored + ' of ' + totalIndicators + ' indicators scored';
+  document.getElementById('prog-label').textContent = scored + ' of ' + totalInd + ' indicators scored';
   document.getElementById('prog-score').textContent = total + ' / 100';
 }
 
 function switchSection(si) {
   currentSection = si;
-  const tabs = ['tab-essential', 'tab-advanced', 'tab-delivery'];
-  SECTIONS.forEach((sec, i) => {
+  SECTIONS.forEach((_, i) => {
     const panel = document.getElementById('panel-' + i);
     if (panel) panel.className = 'section-panel' + (i === si ? ' active' : '');
-    const tab = document.getElementById(tabs[i]);
-    if (tab) {
-      const anyScored = sec.indicators.some((_, ii) => scores[key(i, ii)] !== undefined);
-      tab.className = 'section-tab' + (anyScored ? ' complete' : '') + (i === si ? ' active' : '');
-    }
+    const anyScored = INDICATORS[i].some((_, ii) => scores[key(i,ii)] !== undefined);
+    const tab = document.getElementById('tab-' + i);
+    if (tab) tab.className = 'section-tab' + (anyScored ? ' complete' : '') + (i === si ? ' active' : '');
   });
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -523,38 +751,29 @@ function goToStep(id) {
 }
 
 function goToSummary() {
-  buildSummary();
-  goToStep('step-summary');
-}
-
-function buildSummary() {
   const total = getTotal();
   const pct = Math.round((total / 100) * 100);
-  const completed = SECTIONS.filter((sec, i) => sec.indicators.some((_, ii) => scores[key(i, ii)] !== undefined)).length;
-
+  const completed = SECTIONS.filter((_, i) => INDICATORS[i].some((_, ii) => scores[key(i,ii)] !== undefined)).length;
   document.getElementById('sum-total').textContent = total + ' / 100';
   document.getElementById('sum-pct').textContent = pct + '%';
   document.getElementById('sum-sections').textContent = completed + ' / 3';
-
   const grid = document.getElementById('sum-grid');
   grid.innerHTML = '';
   SECTIONS.forEach((sec, i) => {
     const sub = getSubtotal(i);
     const p = Math.round((sub / sec.max) * 100);
     const barClass = p >= 75 ? 'bar-high' : p >= 50 ? 'bar-mid' : 'bar-low';
-    grid.innerHTML += `<div class="summary-card">
-      <div class="summary-card-name">${sec.label}</div>
-      <div class="summary-card-score">${sub} <span class="summary-card-max">/ ${sec.max}</span></div>
-      <div class="summary-card-bar"><div class="${barClass}" style="width:${p}%"></div></div>
-    </div>`;
+    grid.innerHTML += '<div class="summary-card"><div class="summary-card-name">' + sec.label + '</div>'
+      + '<div class="summary-card-score">' + sub + ' <span class="summary-card-max">/ ' + sec.max + '</span></div>'
+      + '<div class="summary-card-bar"><div class="' + barClass + '" style="width:' + p + '%"></div></div></div>';
   });
+  goToStep('step-summary');
 }
 
 async function exportDocx() {
   const btn = document.getElementById('export-btn');
   btn.disabled = true;
-  btn.textContent = 'Building document…';
-  setStatus('export-status', 'Generating your Word document…', 'loading');
+  btn.textContent = 'Building document\u2026';
 
   const name = document.getElementById('f-name').value.trim() || 'Instructor';
   const course = document.getElementById('f-course').value.trim() || 'Course';
@@ -564,170 +783,73 @@ async function exportDocx() {
   const plan = document.getElementById('sum-plan').value.trim();
   const total = getTotal();
   const pct = Math.round((total / 100) * 100);
-  const dateStr = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  const dateStr = new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
 
   try {
     const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
-            AlignmentType, HeadingLevel, BorderStyle, WidthType, ShadingType, VerticalAlign } = docx;
+            AlignmentType, BorderStyle, WidthType, ShadingType, VerticalAlign } = docx;
 
     const border = { style: BorderStyle.SINGLE, size: 1, color: 'CCCCCC' };
     const borders = { top: border, bottom: border, left: border, right: border };
-    const noBorder = { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' };
-    const noBorders = { top: noBorder, bottom: noBorder, left: noBorder, right: noBorder };
 
-    const makeHeading = (text, level) => new Paragraph({
-      children: [new TextRun({ text, bold: true, size: level === 1 ? 32 : level === 2 ? 26 : 22, font: 'Arial', color: level === 1 ? '1a2744' : level === 2 ? '1d7d74' : '2c2c2a' })],
-      spacing: { before: level === 1 ? 0 : 240, after: 120 }
-    });
+    const makeP = (text, opts) => new Paragraph({ children: [new TextRun(Object.assign({ text, size: 22, font: 'Arial', color: '2c2c2a' }, opts || {}))], spacing: { after: 80 } });
 
-    const makeP = (text, opts = {}) => new Paragraph({
-      children: [new TextRun({ text, size: 22, font: 'Arial', color: '2c2c2a', ...opts })],
-      spacing: { after: 80 }
-    });
-
-    const makeScoreRow = (num, indicator, score, note) => {
-      const scoreLabel = score === undefined ? '—' : score === 0 ? '0 – Developing' : score === 1 ? '1 – Accomplished' : '2 – Exemplary';
-      const scoreFill = score === undefined ? 'EEEEEE' : score === 0 ? 'FDECEA' : score === 1 ? 'FEF3E2' : 'EAF5EC';
-      const scoreColor = score === undefined ? '888888' : score === 0 ? 'B83232' : score === 1 ? 'C97B2A' : '2E7D47';
-      const rows = [
-        new TableRow({
-          children: [
-            new TableCell({
-              borders, width: { size: 600, type: WidthType.DXA },
-              margins: { top: 60, bottom: 60, left: 100, right: 100 },
-              verticalAlign: VerticalAlign.CENTER,
-              children: [new Paragraph({ children: [new TextRun({ text: String(num), size: 18, font: 'Arial', color: '888888', bold: true })], alignment: AlignmentType.CENTER })]
-            }),
-            new TableCell({
-              borders, width: { size: 5760, type: WidthType.DXA },
-              margins: { top: 60, bottom: 60, left: 100, right: 100 },
-              children: [new Paragraph({ children: [new TextRun({ text: indicator, size: 20, font: 'Arial', color: '2c2c2a' })] })]
-            }),
-            new TableCell({
-              borders, width: { size: 2000, type: WidthType.DXA },
-              shading: { fill: scoreFill, type: ShadingType.CLEAR },
-              margins: { top: 60, bottom: 60, left: 100, right: 100 },
-              verticalAlign: VerticalAlign.CENTER,
-              children: [new Paragraph({ children: [new TextRun({ text: scoreLabel, size: 18, font: 'Arial', color: scoreColor, bold: true })], alignment: AlignmentType.CENTER })]
-            })
-          ]
-        })
-      ];
-      if (note) {
-        rows.push(new TableRow({
-          children: [
-            new TableCell({ borders, width: { size: 600, type: WidthType.DXA }, children: [new Paragraph({ children: [] })] }),
-            new TableCell({
-              borders, width: { size: 7760, type: WidthType.DXA }, columnSpan: 2,
-              shading: { fill: 'F7F7F6', type: ShadingType.CLEAR },
-              margins: { top: 40, bottom: 60, left: 100, right: 100 },
-              children: [new Paragraph({ children: [new TextRun({ text: 'Notes: ' + note, size: 18, font: 'Arial', color: '5c5c58', italics: true })] })]
-            })
-          ]
-        }));
-      }
-      return rows;
-    };
-
-    const headerRow = (label, max) => new TableRow({
-      children: [
-        new TableCell({
-          borders, columnSpan: 2, width: { size: 6360, type: WidthType.DXA },
-          shading: { fill: '1a2744', type: ShadingType.CLEAR },
-          margins: { top: 80, bottom: 80, left: 120, right: 120 },
-          children: [new Paragraph({ children: [new TextRun({ text: label, size: 22, font: 'Arial', color: 'FFFFFF', bold: true })] })]
-        }),
-        new TableCell({
-          borders, width: { size: 2000, type: WidthType.DXA },
-          shading: { fill: '1a2744', type: ShadingType.CLEAR },
-          margins: { top: 80, bottom: 80, left: 120, right: 120 },
-          children: [new Paragraph({ children: [new TextRun({ text: 'out of ' + max + ' pts', size: 18, font: 'Arial', color: 'FFFFFF' })], alignment: AlignmentType.CENTER })]
-        })
-      ]
-    });
+    const headerRow = (label, max) => new TableRow({ children: [
+      new TableCell({ borders, columnSpan: 2, width: { size: 6360, type: WidthType.DXA }, shading: { fill: '1a2744', type: ShadingType.CLEAR }, margins: { top: 80, bottom: 80, left: 120, right: 120 }, children: [new Paragraph({ children: [new TextRun({ text: label, size: 22, font: 'Arial', color: 'FFFFFF', bold: true })] })] }),
+      new TableCell({ borders, width: { size: 2000, type: WidthType.DXA }, shading: { fill: '1a2744', type: ShadingType.CLEAR }, margins: { top: 80, bottom: 80, left: 120, right: 120 }, children: [new Paragraph({ children: [new TextRun({ text: 'out of ' + max + ' pts', size: 18, font: 'Arial', color: 'FFFFFF' })], alignment: AlignmentType.CENTER })] })
+    ]});
 
     const subtotalRow = (si) => {
       const sub = getSubtotal(si);
-      const max = SECTIONS[si].max;
-      return new TableRow({
-        children: [
-          new TableCell({
-            borders, columnSpan: 2, width: { size: 6360, type: WidthType.DXA },
-            shading: { fill: 'EFEFED', type: ShadingType.CLEAR },
-            margins: { top: 60, bottom: 60, left: 120, right: 120 },
-            children: [new Paragraph({ children: [new TextRun({ text: 'Subtotal', size: 20, font: 'Arial', color: '5c5c58', bold: true })] })]
-          }),
-          new TableCell({
-            borders, width: { size: 2000, type: WidthType.DXA },
-            shading: { fill: 'EFEFED', type: ShadingType.CLEAR },
-            margins: { top: 60, bottom: 60, left: 120, right: 120 },
-            children: [new Paragraph({ children: [new TextRun({ text: sub + ' / ' + max, size: 20, font: 'Arial', color: '1a2744', bold: true })], alignment: AlignmentType.CENTER })]
-          })
-        ]
-      });
+      return new TableRow({ children: [
+        new TableCell({ borders, columnSpan: 2, width: { size: 6360, type: WidthType.DXA }, shading: { fill: 'EFEFED', type: ShadingType.CLEAR }, margins: { top: 60, bottom: 60, left: 120, right: 120 }, children: [new Paragraph({ children: [new TextRun({ text: 'Subtotal', size: 20, font: 'Arial', color: '5c5c58', bold: true })] })] }),
+        new TableCell({ borders, width: { size: 2000, type: WidthType.DXA }, shading: { fill: 'EFEFED', type: ShadingType.CLEAR }, margins: { top: 60, bottom: 60, left: 120, right: 120 }, children: [new Paragraph({ children: [new TextRun({ text: sub + ' / ' + SECTIONS[si].max, size: 20, font: 'Arial', color: '1a2744', bold: true })], alignment: AlignmentType.CENTER })] })
+      ]});
     };
 
-    // Build table rows
     const allRows = [];
     SECTIONS.forEach((sec, si) => {
       allRows.push(headerRow(sec.label, sec.max));
-      sec.indicators.forEach((ind, ii) => {
+      INDICATORS[si].forEach((ind, ii) => {
         const k = key(si, ii);
-        const noteVal = notes[k] || (document.getElementById('notes-' + k) ? document.getElementById('notes-' + k).value.trim() : '');
-        makeScoreRow(ii + 1, ind, scores[k], noteVal).forEach(r => allRows.push(r));
+        const sc = scores[k];
+        const scoreLabel = sc === undefined ? '\u2014' : sc === 0 ? '0 \u2013 Developing' : sc === 1 ? '1 \u2013 Accomplished' : '2 \u2013 Exemplary';
+        const scoreFill = sc === undefined ? 'EEEEEE' : sc === 0 ? 'FDECEA' : sc === 1 ? 'FEF3E2' : 'EAF5EC';
+        const scoreColor = sc === undefined ? '888888' : sc === 0 ? 'B83232' : sc === 1 ? 'C97B2A' : '2E7D47';
+        const noteEl = document.getElementById('notes-' + k);
+        const noteVal = (noteEl ? noteEl.value.trim() : '') || notes[k] || '';
+        allRows.push(new TableRow({ children: [
+          new TableCell({ borders, width: { size: 600, type: WidthType.DXA }, margins: { top: 60, bottom: 60, left: 100, right: 100 }, verticalAlign: VerticalAlign.CENTER, children: [new Paragraph({ children: [new TextRun({ text: String(ii+1), size: 18, font: 'Arial', color: '888888', bold: true })], alignment: AlignmentType.CENTER })] }),
+          new TableCell({ borders, width: { size: 5760, type: WidthType.DXA }, margins: { top: 60, bottom: 60, left: 100, right: 100 }, children: [new Paragraph({ children: [new TextRun({ text: ind, size: 20, font: 'Arial', color: '2c2c2a' })] }), ...(noteVal ? [new Paragraph({ children: [new TextRun({ text: 'Notes: ' + noteVal, size: 18, font: 'Arial', color: '5c5c58', italics: true })] })] : [])] }),
+          new TableCell({ borders, width: { size: 2000, type: WidthType.DXA }, shading: { fill: scoreFill, type: ShadingType.CLEAR }, margins: { top: 60, bottom: 60, left: 100, right: 100 }, verticalAlign: VerticalAlign.CENTER, children: [new Paragraph({ children: [new TextRun({ text: scoreLabel, size: 18, font: 'Arial', color: scoreColor, bold: true })], alignment: AlignmentType.CENTER })] })
+        ]}));
       });
       allRows.push(subtotalRow(si));
     });
 
-    // Total row
-    allRows.push(new TableRow({
-      children: [
-        new TableCell({
-          borders, columnSpan: 2, width: { size: 6360, type: WidthType.DXA },
-          shading: { fill: '1d7d74', type: ShadingType.CLEAR },
-          margins: { top: 80, bottom: 80, left: 120, right: 120 },
-          children: [new Paragraph({ children: [new TextRun({ text: 'TOTAL', size: 22, font: 'Arial', color: 'FFFFFF', bold: true })] })]
-        }),
-        new TableCell({
-          borders, width: { size: 2000, type: WidthType.DXA },
-          shading: { fill: '1d7d74', type: ShadingType.CLEAR },
-          margins: { top: 80, bottom: 80, left: 120, right: 120 },
-          children: [new Paragraph({ children: [new TextRun({ text: total + ' / 100  (' + pct + '%)', size: 22, font: 'Arial', color: 'FFFFFF', bold: true })], alignment: AlignmentType.CENTER })]
-        })
-      ]
-    }));
+    allRows.push(new TableRow({ children: [
+      new TableCell({ borders, columnSpan: 2, width: { size: 6360, type: WidthType.DXA }, shading: { fill: '1d7d74', type: ShadingType.CLEAR }, margins: { top: 80, bottom: 80, left: 120, right: 120 }, children: [new Paragraph({ children: [new TextRun({ text: 'TOTAL', size: 22, font: 'Arial', color: 'FFFFFF', bold: true })] })] }),
+      new TableCell({ borders, width: { size: 2000, type: WidthType.DXA }, shading: { fill: '1d7d74', type: ShadingType.CLEAR }, margins: { top: 80, bottom: 80, left: 120, right: 120 }, children: [new Paragraph({ children: [new TextRun({ text: total + ' / 100  (' + pct + '%)', size: 22, font: 'Arial', color: 'FFFFFF', bold: true })], alignment: AlignmentType.CENTER })] })
+    ]}));
 
-    const narrativeSection = (label, content) => [
-      makeHeading(label, 2),
-      new Paragraph({
-        children: [new TextRun({ text: content || '(not provided)', size: 22, font: 'Arial', color: content ? '2c2c2a' : '9e9e98', italics: !content })],
-        spacing: { after: 160 }
-      })
+    const narrativePara = (label, content) => [
+      new Paragraph({ children: [new TextRun({ text: label, size: 24, font: 'Arial', color: '1d7d74', bold: true })], spacing: { before: 240, after: 100 } }),
+      new Paragraph({ children: [new TextRun({ text: content || '(not provided)', size: 22, font: 'Arial', color: content ? '2c2c2a' : '9e9e98', italics: !content })], spacing: { after: 160 } })
     ];
 
     const doc = new Document({
-      sections: [{
-        properties: {
-          page: { size: { width: 12240, height: 15840 }, margin: { top: 1080, right: 1080, bottom: 1080, left: 1080 } }
-        },
-        children: [
-          makeHeading('OLC Course Review Scorecard', 1),
-          makeP(course, { bold: true, size: 24 }),
-          makeP(name),
-          makeP(term ? term + '  ·  Completed ' + dateStr : 'Completed ' + dateStr, { color: '9e9e98' }),
-          new Paragraph({ spacing: { after: 240 } }),
-          new Table({
-            width: { size: 8360, type: WidthType.DXA },
-            columnWidths: [600, 5760, 2000],
-            rows: allRows
-          }),
-          new Paragraph({ spacing: { after: 360 } }),
-          makeHeading('Summary', 1),
-          ...narrativeSection('Strengths', strengths),
-          ...narrativeSection('Areas for improvement', improve),
-          ...narrativeSection('Improvement plan', plan),
-        ]
-      }]
+      sections: [{ properties: { page: { size: { width: 12240, height: 15840 }, margin: { top: 1080, right: 1080, bottom: 1080, left: 1080 } } }, children: [
+        new Paragraph({ children: [new TextRun({ text: 'OLC Course Review Scorecard', size: 36, font: 'Arial', color: '1a2744', bold: true })], spacing: { after: 80 } }),
+        new Paragraph({ children: [new TextRun({ text: course, size: 26, font: 'Arial', color: '1a2744', bold: true })], spacing: { after: 60 } }),
+        new Paragraph({ children: [new TextRun({ text: name, size: 22, font: 'Arial', color: '2c2c2a' })], spacing: { after: 60 } }),
+        new Paragraph({ children: [new TextRun({ text: (term ? term + '  \u00b7  ' : '') + 'Completed ' + dateStr, size: 20, font: 'Arial', color: '9e9e98' })], spacing: { after: 280 } }),
+        new Table({ width: { size: 8360, type: WidthType.DXA }, columnWidths: [600, 5760, 2000], rows: allRows }),
+        new Paragraph({ spacing: { after: 320 } }),
+        new Paragraph({ children: [new TextRun({ text: 'Summary', size: 32, font: 'Arial', color: '1a2744', bold: true })], spacing: { after: 120 } }),
+        ...narrativePara('Strengths', strengths),
+        ...narrativePara('Areas for improvement', improve),
+        ...narrativePara('Improvement plan', plan)
+      ]}]
     });
 
     const buffer = await Packer.toBuffer(doc);
@@ -736,17 +858,17 @@ async function exportDocx() {
     const a = document.createElement('a');
     a.href = url;
     const safeCourse = course.replace(/[^a-zA-Z0-9]/g, '_').replace(/_+/g, '_').slice(0, 40);
-    a.download = `QCTIP_${safeCourse}_${term || dateStr.replace(/,?\s/g, '_')}.docx`;
+    a.download = 'OLC_Scorecard_' + safeCourse + (term ? '_' + term.replace(/\s/g,'_') : '') + '.docx';
     a.click();
     URL.revokeObjectURL(url);
-
-    setStatus('export-status', '', '');
     showToast('Document downloaded');
   } catch(e) {
-    setStatus('export-status', 'Export failed: ' + e.message, 'error');
+    const s = document.getElementById('export-status');
+    s.className = 'status show status-error';
+    s.textContent = 'Export failed: ' + e.message;
   } finally {
     btn.disabled = false;
-    btn.innerHTML = '&#8595; Download Word doc';
+    btn.innerHTML = '&darr; Download Word doc';
   }
 }
 </script>
