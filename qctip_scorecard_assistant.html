@@ -3,496 +3,169 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QCTIP Scorecard Assistant</title>
+<title>OLC Course Review Scorecard</title>
 <style>
   :root {
     --navy: #1a2744;
+    --navy-light: #eef0f5;
     --teal: #1d7d74;
     --teal-light: #e8f5f4;
-    --teal-mid: #c2e4e1;
+    --teal-mid: #b2deda;
     --amber: #c97b2a;
     --amber-light: #fef3e2;
+    --red: #b83232;
     --red-light: #fdecea;
-    --red: #c0392b;
-    --green-light: #eaf5ec;
     --green: #2e7d47;
-    --gray-50: #f8f8f7;
+    --green-light: #eaf5ec;
+    --gray-50: #f7f7f6;
     --gray-100: #efefed;
     --gray-200: #ddddd9;
     --gray-400: #9e9e98;
     --gray-600: #5c5c58;
     --gray-800: #2c2c2a;
     --white: #ffffff;
-    --font-display: 'Georgia', serif;
-    --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --radius: 6px;
     --radius-lg: 10px;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: var(--font-body);
-    background: var(--gray-50);
-    color: var(--gray-800);
-    font-size: 15px;
-    line-height: 1.6;
-    min-height: 100vh;
-  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--gray-50); color: var(--gray-800); font-size: 15px; line-height: 1.6; min-height: 100vh; }
 
   /* Header */
-  .site-header {
-    background: var(--navy);
-    padding: 0 2rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    height: 56px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  .site-header h1 {
-    font-family: var(--font-display);
-    font-size: 17px;
-    font-weight: normal;
-    color: var(--white);
-    letter-spacing: 0.01em;
-  }
-  .site-header .badge {
-    font-size: 11px;
-    background: rgba(255,255,255,0.15);
-    color: rgba(255,255,255,0.8);
-    padding: 2px 8px;
-    border-radius: 20px;
-    letter-spacing: 0.04em;
-  }
-  .progress-strip {
-    position: sticky;
-    top: 56px;
-    z-index: 99;
-    background: var(--white);
-    border-bottom: 1px solid var(--gray-200);
-    display: none;
-  }
-  .progress-strip.visible { display: block; }
-  .progress-bar {
-    height: 3px;
-    background: var(--teal);
-    transition: width 0.4s ease;
-  }
-  .progress-info {
-    padding: 6px 2rem;
-    font-size: 12px;
-    color: var(--gray-400);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+  .header { background: var(--navy); padding: 0 2rem; height: 56px; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 200; }
+  .header-title { font-size: 16px; color: var(--white); font-weight: 500; }
+  .header-badge { font-size: 11px; background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.75); padding: 2px 8px; border-radius: 20px; }
+
+  /* Progress */
+  .progress-bar-wrap { position: sticky; top: 56px; z-index: 199; background: var(--white); border-bottom: 1px solid var(--gray-200); }
+  .progress-bar-fill { height: 3px; background: var(--teal); width: 0%; transition: width 0.3s; }
+  .progress-info { padding: 5px 2rem; display: flex; justify-content: space-between; font-size: 12px; color: var(--gray-400); }
+  .progress-score { font-weight: 600; color: var(--gray-800); }
 
   /* Layout */
-  .main {
-    max-width: 820px;
-    margin: 0 auto;
-    padding: 2.5rem 1.5rem 4rem;
-  }
+  .main { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem 5rem; }
 
   /* Steps */
   .step { display: none; }
   .step.active { display: block; }
 
-  /* Intro step */
-  .intro-eyebrow {
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: var(--teal);
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-  .intro-title {
-    font-family: var(--font-display);
-    font-size: 28px;
-    color: var(--navy);
-    font-weight: normal;
-    line-height: 1.3;
-    margin-bottom: 10px;
-  }
-  .intro-sub {
-    font-size: 15px;
-    color: var(--gray-600);
-    max-width: 600px;
-    line-height: 1.65;
-    margin-bottom: 2rem;
-  }
+  /* Intro */
+  .intro-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); margin-bottom: 6px; }
+  .intro-title { font-size: 26px; font-weight: 600; color: var(--navy); line-height: 1.3; margin-bottom: 10px; }
+  .intro-desc { font-size: 14px; color: var(--gray-600); max-width: 620px; line-height: 1.65; margin-bottom: 2rem; }
 
-  .input-group { margin-bottom: 1.25rem; }
-  .input-label {
-    display: block;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--gray-600);
-    margin-bottom: 6px;
-    letter-spacing: 0.02em;
-  }
-  .input-label span {
-    font-weight: 400;
-    color: var(--gray-400);
-    margin-left: 4px;
-  }
-  textarea {
-    width: 100%;
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius-lg);
-    padding: 12px 14px;
-    font-size: 14px;
-    font-family: var(--font-body);
-    color: var(--gray-800);
-    background: var(--white);
-    resize: vertical;
-    line-height: 1.6;
-    transition: border-color 0.15s;
-  }
-  textarea:focus { outline: none; border-color: var(--teal); }
-  textarea::placeholder { color: var(--gray-400); }
-  #syllabus-input { min-height: 220px; }
-  #assignment-input { min-height: 130px; }
+  .field-group { margin-bottom: 1.25rem; }
+  .field-label { display: block; font-size: 13px; font-weight: 600; color: var(--gray-600); margin-bottom: 5px; }
+  .field-label span { font-weight: 400; color: var(--gray-400); }
+  input[type="text"] { width: 100%; padding: 9px 12px; border: 1px solid var(--gray-200); border-radius: var(--radius); font-size: 14px; font-family: inherit; color: var(--gray-800); background: var(--white); transition: border-color 0.15s; }
+  input[type="text"]:focus { outline: none; border-color: var(--teal); }
 
-  .btn-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 9px 18px;
-    border-radius: var(--radius);
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    border: 1px solid transparent;
-    transition: all 0.15s;
-    font-family: var(--font-body);
-  }
-  .btn-primary {
-    background: var(--teal);
-    color: var(--white);
-    border-color: var(--teal);
-  }
-  .btn-primary:hover { background: #186860; }
-  .btn-secondary {
-    background: var(--white);
-    color: var(--gray-600);
-    border-color: var(--gray-200);
-  }
-  .btn-secondary:hover { background: var(--gray-50); border-color: var(--gray-400); }
-  .btn-navy {
-    background: var(--navy);
-    color: var(--white);
-    border-color: var(--navy);
-  }
-  .btn-navy:hover { background: #141e38; }
-  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-  .btn-sm { padding: 6px 12px; font-size: 13px; }
+  .section-tabs { display: flex; gap: 0; margin-bottom: 2rem; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); overflow: hidden; }
+  .section-tab { flex: 1; padding: 10px 12px; background: var(--white); border: none; cursor: pointer; font-size: 13px; font-weight: 500; color: var(--gray-600); transition: all 0.15s; border-right: 1px solid var(--gray-200); font-family: inherit; text-align: center; line-height: 1.3; }
+  .section-tab:last-child { border-right: none; }
+  .section-tab:hover { background: var(--gray-50); color: var(--gray-800); }
+  .section-tab.active { background: var(--navy); color: var(--white); }
+  .section-tab.complete { background: var(--green-light); color: var(--green); }
+  .section-tab.complete.active { background: var(--navy); color: var(--white); }
 
-  /* Status messages */
-  .status {
-    padding: 10px 14px;
-    border-radius: var(--radius);
-    font-size: 13px;
-    margin: 1rem 0;
-    border: 1px solid;
-    line-height: 1.5;
-  }
-  .status-loading { background: #e8f0fe; border-color: #b8d0fb; color: #1a56c4; }
-  .status-success { background: var(--green-light); border-color: #b2dfbb; color: var(--green); }
-  .status-error { background: var(--red-light); border-color: #f5c1bc; color: var(--red); }
-  .status { display: none; }
-  .status.visible { display: block; }
+  /* Section panels */
+  .section-panel { display: none; }
+  .section-panel.active { display: block; }
 
-  /* Section nav */
-  .section-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 1.75rem;
-  }
-  .nav-chip {
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 500;
-    border: 1px solid var(--gray-200);
-    background: var(--white);
-    color: var(--gray-600);
-    cursor: pointer;
-    transition: all 0.15s;
-    white-space: nowrap;
-  }
-  .nav-chip:hover { border-color: var(--teal); color: var(--teal); }
-  .nav-chip.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
-  .nav-chip.complete { background: var(--green-light); color: var(--green); border-color: #b2dfbb; }
-  .nav-chip.complete.active { background: var(--green); color: var(--white); border-color: var(--green); }
+  .section-heading { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 10px; border-bottom: 2px solid var(--navy); margin-bottom: 6px; }
+  .section-title { font-size: 20px; font-weight: 600; color: var(--navy); }
+  .section-max { font-size: 13px; color: var(--gray-400); }
+  .section-note { font-size: 13px; color: var(--gray-600); background: var(--navy-light); border-radius: var(--radius); padding: 8px 12px; margin-bottom: 1.25rem; line-height: 1.5; }
 
-  /* Category panel */
-  .cat-panel { display: none; }
-  .cat-panel.active { display: block; }
-
-  .cat-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 1.25rem;
-    padding-bottom: 10px;
-    border-bottom: 2px solid var(--navy);
-  }
-  .cat-title {
-    font-family: var(--font-display);
-    font-size: 22px;
-    color: var(--navy);
-    font-weight: normal;
-  }
-  .cat-max {
-    font-size: 13px;
-    color: var(--gray-400);
-  }
-
-  /* Indicator rows */
-  .indicator {
-    padding: 14px 0;
-    border-bottom: 1px solid var(--gray-100);
-  }
+  /* Indicators */
+  .indicator { padding: 14px 0; border-bottom: 1px solid var(--gray-100); }
   .indicator:last-of-type { border-bottom: none; }
+  .indicator-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
+  .indicator-num { font-size: 12px; font-weight: 700; color: var(--gray-400); min-width: 20px; padding-top: 2px; }
+  .indicator-text { font-size: 14px; color: var(--gray-800); line-height: 1.55; flex: 1; }
+  .help-btn { background: none; border: 1px solid var(--gray-200); border-radius: 20px; font-size: 11px; color: var(--gray-400); padding: 1px 8px; cursor: pointer; white-space: nowrap; margin-left: 8px; flex-shrink: 0; font-family: inherit; transition: all 0.15s; }
+  .help-btn:hover { border-color: var(--teal); color: var(--teal); }
+  .help-box { display: none; font-size: 13px; color: var(--gray-600); background: var(--teal-light); border-left: 3px solid var(--teal-mid); padding: 8px 12px; border-radius: 0 var(--radius) var(--radius) 0; margin: 6px 0 6px 30px; line-height: 1.55; }
+  .help-box.show { display: block; }
+  .help-loading { font-style: italic; color: var(--gray-400); }
 
-  .indicator-top {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    margin-bottom: 8px;
-  }
-  .indicator-num {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--gray-400);
-    min-width: 22px;
-    padding-top: 2px;
-  }
-  .indicator-text {
-    font-size: 14px;
-    color: var(--gray-800);
-    line-height: 1.55;
-    flex: 1;
-  }
-  .tag {
-    display: inline-block;
-    font-size: 11px;
-    padding: 2px 7px;
-    border-radius: 20px;
-    margin-left: 6px;
-    font-weight: 500;
-    vertical-align: middle;
-    white-space: nowrap;
-  }
-  .tag-ai { background: #e8f0fe; color: #1a56c4; }
-  .tag-self { background: var(--amber-light); color: var(--amber); }
-
-  .score-row {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-left: 32px;
-    flex-wrap: wrap;
-  }
-  .score-btn {
-    width: 38px;
-    height: 38px;
-    border-radius: var(--radius);
-    border: 1px solid var(--gray-200);
-    background: var(--white);
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    color: var(--gray-400);
-    transition: all 0.12s;
-    font-family: var(--font-body);
-  }
+  .score-row { display: flex; gap: 6px; align-items: center; margin-left: 30px; flex-wrap: wrap; }
+  .score-btn { width: 44px; height: 36px; border-radius: var(--radius); border: 1px solid var(--gray-200); background: var(--white); font-size: 14px; font-weight: 600; cursor: pointer; color: var(--gray-400); transition: all 0.12s; font-family: inherit; }
   .score-btn:hover { border-color: var(--gray-600); color: var(--gray-800); }
-  .score-btn.sel-0 { background: var(--red-light); border-color: #e08070; color: var(--red); }
-  .score-btn.sel-1 { background: var(--amber-light); border-color: #e8a060; color: var(--amber); }
-  .score-btn.sel-2 { background: #e8f0fe; border-color: #7aabf0; color: #1a56c4; }
-  .score-btn.sel-3 { background: var(--green-light); border-color: #80c890; color: var(--green); }
+  .score-btn.sel-0 { background: var(--red-light); border-color: #d08080; color: var(--red); }
+  .score-btn.sel-1 { background: var(--amber-light); border-color: #d09050; color: var(--amber); }
+  .score-btn.sel-2 { background: var(--green-light); border-color: #80c890; color: var(--green); }
+  .score-legend { font-size: 11px; color: var(--gray-400); margin-left: 4px; }
 
-  .score-legend {
-    font-size: 11px;
-    color: var(--gray-400);
-    margin-left: 4px;
-  }
-
-  .rationale {
-    margin-left: 32px;
-    margin-top: 6px;
-    font-size: 13px;
-    color: var(--gray-600);
-    background: var(--teal-light);
-    border-left: 3px solid var(--teal-mid);
-    padding: 6px 10px;
-    border-radius: 0 var(--radius) var(--radius) 0;
-    line-height: 1.5;
-  }
-
-  .notes-field {
-    width: calc(100% - 32px);
-    margin-left: 32px;
-    margin-top: 6px;
-    padding: 6px 10px;
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius);
-    font-size: 13px;
-    font-family: var(--font-body);
-    color: var(--gray-800);
-    background: var(--white);
-    resize: vertical;
-    min-height: 44px;
-    line-height: 1.5;
-  }
+  .notes-field { width: calc(100% - 30px); margin-left: 30px; margin-top: 6px; padding: 6px 10px; border: 1px solid var(--gray-200); border-radius: var(--radius); font-size: 13px; font-family: inherit; color: var(--gray-800); background: var(--white); resize: vertical; min-height: 44px; line-height: 1.5; }
   .notes-field:focus { outline: none; border-color: var(--gray-400); }
   .notes-field::placeholder { color: var(--gray-400); }
 
   /* Subtotal */
-  .subtotal {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: var(--gray-100);
-    border-radius: var(--radius);
-    padding: 10px 14px;
-    margin-top: 1.25rem;
-    font-size: 14px;
-  }
-  .subtotal-label { color: var(--gray-600); font-weight: 500; }
-  .subtotal-val { font-weight: 700; color: var(--navy); font-size: 16px; }
+  .subtotal { display: flex; justify-content: space-between; align-items: center; background: var(--gray-100); border-radius: var(--radius); padding: 10px 14px; margin-top: 1.25rem; }
+  .subtotal-label { font-size: 14px; color: var(--gray-600); font-weight: 500; }
+  .subtotal-val { font-size: 18px; font-weight: 700; color: var(--navy); }
 
-  .nav-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1.5rem;
-    padding-top: 1.25rem;
-    border-top: 1px solid var(--gray-100);
-  }
+  .nav-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--gray-100); }
+
+  /* Buttons */
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 18px; border-radius: var(--radius); font-size: 14px; font-weight: 500; cursor: pointer; border: 1px solid transparent; transition: all 0.15s; font-family: inherit; }
+  .btn-primary { background: var(--teal); color: var(--white); border-color: var(--teal); }
+  .btn-primary:hover { background: #186860; }
+  .btn-secondary { background: var(--white); color: var(--gray-600); border-color: var(--gray-200); }
+  .btn-secondary:hover { background: var(--gray-50); border-color: var(--gray-400); }
+  .btn-navy { background: var(--navy); color: var(--white); border-color: var(--navy); }
+  .btn-navy:hover { background: #141e38; }
+  .btn-sm { padding: 6px 12px; font-size: 13px; }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
 
   /* Summary */
-  .summary-total {
-    background: var(--navy);
-    color: var(--white);
-    border-radius: var(--radius-lg);
-    padding: 20px 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-  }
-  .summary-total-label { font-size: 13px; opacity: 0.7; margin-bottom: 4px; }
-  .summary-total-score { font-family: var(--font-display); font-size: 36px; }
-  .summary-total-pct { font-size: 14px; opacity: 0.8; margin-top: 4px; }
+  .summary-banner { background: var(--navy); color: var(--white); border-radius: var(--radius-lg); padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+  .summary-label { font-size: 12px; opacity: 0.65; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .summary-big { font-size: 34px; font-weight: 700; }
+  .summary-pct { font-size: 14px; opacity: 0.75; margin-top: 2px; }
 
-  .summary-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 10px;
-    margin-bottom: 2rem;
-  }
-  .summary-card {
-    background: var(--white);
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius-lg);
-    padding: 14px 16px;
-  }
-  .summary-card-name { font-size: 12px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
-  .summary-card-score { font-size: 22px; font-weight: 700; color: var(--navy); }
+  .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 2rem; }
+  .summary-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 14px 16px; }
+  .summary-card-name { font-size: 11px; font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+  .summary-card-score { font-size: 24px; font-weight: 700; color: var(--navy); }
   .summary-card-max { font-size: 13px; color: var(--gray-400); font-weight: 400; }
   .summary-card-bar { height: 4px; background: var(--gray-100); border-radius: 2px; margin-top: 8px; overflow: hidden; }
-  .summary-card-fill { height: 100%; border-radius: 2px; }
-  .fill-high { background: var(--green); }
-  .fill-mid { background: var(--amber); }
-  .fill-low { background: var(--red); }
+  .bar-high { background: var(--green); height: 100%; border-radius: 2px; }
+  .bar-mid { background: var(--amber); height: 100%; border-radius: 2px; }
+  .bar-low { background: var(--red); height: 100%; border-radius: 2px; }
 
-  .narrative-section { margin-top: 0; }
-  .narrative-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  .narrative-title { font-size: 15px; font-weight: 600; color: var(--navy); }
-  .narrative-box {
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius-lg);
-    padding: 16px 18px;
-    font-size: 14px;
-    line-height: 1.75;
-    color: var(--gray-800);
-    background: var(--white);
-    white-space: pre-wrap;
-    min-height: 140px;
-  }
-  .narrative-box.placeholder { color: var(--gray-400); font-style: italic; }
+  .strengths-section { margin-bottom: 1.5rem; }
+  .strengths-label { font-size: 13px; font-weight: 600; color: var(--gray-600); margin-bottom: 6px; display: block; }
+  textarea.strengths-input { width: 100%; min-height: 80px; padding: 10px 12px; border: 1px solid var(--gray-200); border-radius: var(--radius); font-size: 14px; font-family: inherit; color: var(--gray-800); background: var(--white); resize: vertical; line-height: 1.6; }
+  textarea.strengths-input:focus { outline: none; border-color: var(--teal); }
+  textarea.strengths-input::placeholder { color: var(--gray-400); }
 
-  .export-row {
-    display: flex;
-    gap: 10px;
-    margin-top: 1.5rem;
-    flex-wrap: wrap;
-  }
-
-  .section-divider {
-    height: 1px;
-    background: var(--gray-200);
-    margin: 2rem 0;
-  }
-
-  /* AI note banner */
-  .ai-banner {
-    background: var(--teal-light);
-    border: 1px solid var(--teal-mid);
-    border-radius: var(--radius-lg);
-    padding: 12px 16px;
-    font-size: 13px;
-    color: var(--teal);
-    margin-bottom: 1.5rem;
-    line-height: 1.55;
-  }
-  .ai-banner strong { color: #0f5550; }
+  .divider { height: 1px; background: var(--gray-200); margin: 1.5rem 0; }
 
   /* Toast */
-  .toast {
-    position: fixed;
-    bottom: 24px;
-    left: 50%;
-    transform: translateX(-50%) translateY(80px);
-    background: var(--navy);
-    color: var(--white);
-    padding: 10px 20px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 500;
-    transition: transform 0.3s ease;
-    z-index: 9999;
-    pointer-events: none;
-  }
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--navy); color: var(--white); padding: 10px 20px; border-radius: 20px; font-size: 13px; font-weight: 500; transition: transform 0.3s; z-index: 9999; pointer-events: none; white-space: nowrap; }
   .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* Status */
+  .status { padding: 9px 13px; border-radius: var(--radius); font-size: 13px; margin: 10px 0; border: 1px solid; display: none; line-height: 1.5; }
+  .status.show { display: block; }
+  .status-error { background: var(--red-light); border-color: #d8a0a0; color: var(--red); }
+  .status-loading { background: #e8f0fe; border-color: #b8d0f8; color: #1a56c4; }
 </style>
 </head>
 <body>
 
-<header class="site-header">
-  <h1>QCTIP Scorecard Assistant</h1>
-  <span class="badge">OLC Quality Scorecard Suite</span>
+<header class="header">
+  <span class="header-title">OLC Course Review Scorecard</span>
+  <span class="header-badge">Salem Community College</span>
 </header>
 
-<div class="progress-strip" id="progress-strip">
-  <div class="progress-bar" id="progress-bar" style="width: 0%"></div>
+<div class="progress-bar-wrap" id="prog-wrap" style="display:none">
+  <div class="progress-bar-fill" id="prog-fill"></div>
   <div class="progress-info">
-    <span id="progress-label">0 of 10 sections reviewed</span>
-    <span id="progress-score" style="font-weight: 600; color: #2c2c2a;">0 / 291</span>
+    <span id="prog-label">0 of 50 indicators scored</span>
+    <span class="progress-score" id="prog-score">0 / 100</span>
   </div>
 </div>
 
@@ -500,212 +173,166 @@
 
 <main class="main">
 
-  <!-- STEP 1: INTRO / PASTE -->
+  <!-- INTRO -->
   <div class="step active" id="step-intro">
-    <p class="intro-eyebrow">Salem Community College</p>
-    <h2 class="intro-title">Quality Course Teaching<br>and Instructional Practice</h2>
-    <p class="intro-sub">Paste your syllabus and a sample assignment below. The AI will score what it can find evidence for in your materials, flag behavioral indicators for self-report, and walk you through each section for review. You stay in control of every score.</p>
+    <p class="intro-label">OLC Quality Scorecard Suite</p>
+    <h1 class="intro-title">Course Review Scorecard</h1>
+    <p class="intro-desc">This end-of-semester self-assessment covers three areas: Essential Design (what's built into your course), Advanced Design (enhancements that elevate quality), and Course Delivery (how you facilitated the course). Click the &#x2753; button on any indicator for plain-language guidance on what each one means and what evidence looks like at each score level.</p>
 
-    <div class="input-group">
-      <label class="input-label" for="syllabus-input">Course syllabus <span>required</span></label>
-      <textarea id="syllabus-input" placeholder="Paste your full course syllabus here…"></textarea>
+    <div class="field-group">
+      <label class="field-label" for="f-name">Your name</label>
+      <input type="text" id="f-name" placeholder="e.g., Lauren Schwartz">
+    </div>
+    <div class="field-group">
+      <label class="field-label" for="f-course">Course name and number</label>
+      <input type="text" id="f-course" placeholder="e.g., Introduction to the Humanities — HUM101">
+    </div>
+    <div class="field-group">
+      <label class="field-label" for="f-term">Term <span>(optional)</span></label>
+      <input type="text" id="f-term" placeholder="e.g., Fall 2026">
     </div>
 
-    <div class="input-group">
-      <label class="input-label" for="assignment-input">Sample assignment <span>optional but helpful</span></label>
-      <textarea id="assignment-input" placeholder="Paste a representative assignment prompt, discussion prompt, or grading rubric…"></textarea>
-    </div>
-
-    <div id="intro-status" class="status"></div>
-
-    <div class="btn-row">
-      <button class="btn btn-primary" id="auto-btn" onclick="runAutoScore()">&#10024; Auto-score with AI</button>
-      <button class="btn btn-secondary" onclick="skipToManual()">Score manually</button>
+    <div class="btn-row" style="margin-top:1.5rem">
+      <button class="btn btn-primary" onclick="startReview()">Begin review &#8594;</button>
     </div>
   </div>
 
-  <!-- STEP 2: REVIEW -->
+  <!-- REVIEW -->
   <div class="step" id="step-review">
-    <div id="ai-banner" class="ai-banner" style="display:none"></div>
-    <div class="section-nav" id="section-nav"></div>
-    <div id="cat-panels"></div>
+    <div class="section-tabs">
+      <button class="section-tab active" id="tab-essential" onclick="switchSection(0)">Essential Design<br><small style="font-weight:400;opacity:0.8">40 pts</small></button>
+      <button class="section-tab" id="tab-advanced" onclick="switchSection(1)">Advanced Design<br><small style="font-weight:400;opacity:0.8">30 pts</small></button>
+      <button class="section-tab" id="tab-delivery" onclick="switchSection(2)">Course Delivery<br><small style="font-weight:400;opacity:0.8">30 pts</small></button>
+    </div>
+    <div id="section-panels"></div>
   </div>
 
-  <!-- STEP 3: SUMMARY -->
+  <!-- SUMMARY -->
   <div class="step" id="step-summary">
-    <div class="summary-total">
+    <div class="summary-banner">
       <div>
-        <div class="summary-total-label">Total score</div>
-        <div class="summary-total-score" id="total-score">0 / 291</div>
-        <div class="summary-total-pct" id="total-pct">0%</div>
+        <div class="summary-label">Total score</div>
+        <div class="summary-big" id="sum-total">0 / 100</div>
+        <div class="summary-pct" id="sum-pct">0%</div>
       </div>
       <div style="text-align:right">
-        <div class="summary-total-label">Sections reviewed</div>
-        <div class="summary-total-score" id="sections-complete">0 / 10</div>
+        <div class="summary-label">Sections</div>
+        <div class="summary-big" id="sum-sections">0 / 3</div>
       </div>
     </div>
 
-    <div class="summary-grid" id="summary-grid"></div>
+    <div class="summary-grid" id="sum-grid"></div>
 
-    <div class="section-divider"></div>
+    <div class="divider"></div>
 
-    <div class="narrative-section">
-      <div class="narrative-header">
-        <span class="narrative-title">Narrative summary</span>
-        <button class="btn btn-sm btn-secondary" onclick="generateNarrative()">&#10024; Generate with AI</button>
-      </div>
-      <div id="narrative-status" class="status"></div>
-      <div class="narrative-box placeholder" id="narrative-box">Click "Generate with AI" to produce a 3–4 paragraph narrative of strengths and areas for growth based on your scores and notes. Or type your own summary here.</div>
+    <div class="strengths-section">
+      <label class="strengths-label">Strengths</label>
+      <textarea class="strengths-input" id="sum-strengths" placeholder="What does this course do well? What are you most proud of?"></textarea>
+    </div>
+    <div class="strengths-section">
+      <label class="strengths-label">Areas for improvement</label>
+      <textarea class="strengths-input" id="sum-improve" placeholder="What would you like to work on before the next time you teach this course?"></textarea>
+    </div>
+    <div class="strengths-section">
+      <label class="strengths-label">Improvement plan</label>
+      <textarea class="strengths-input" id="sum-plan" placeholder="List 2–3 specific, actionable steps you plan to take before next semester."></textarea>
     </div>
 
-    <div class="export-row">
+    <div id="export-status" class="status"></div>
+
+    <div class="btn-row" style="margin-top:1.5rem">
       <button class="btn btn-navy" onclick="goToStep('step-review')">&#8592; Back to review</button>
-      <button class="btn btn-primary" onclick="copyExport()">&#8599; Copy full report</button>
-      <button class="btn btn-secondary" onclick="printReport()">&#128438; Print / Save PDF</button>
+      <button class="btn btn-primary" id="export-btn" onclick="exportDocx()">&#8595; Download Word doc</button>
     </div>
   </div>
 
 </main>
 
+<script src="https://unpkg.com/docx@8.5.0/build/index.js"></script>
 <script>
-const CATEGORIES = [
-  { id:'design', label:'Course design', max:39, indicators:[
-    'Consistent course design is used.',
-    'Clear structure and course organization is provided with opportunities for students to share in the responsibility for their learning.',
-    'Course design is cohesive and aligns course objectives, assessments, and activities.',
-    'Course is designed so that student workload is reasonable and evenly distributed.',
-    'Content has logical progression and facilitates student interaction/understanding.',
-    'The course is designed to facilitate easy navigation of course content.',
-    'Course syllabus is learner-centered and sets tone for learning and engaging student.',
-    'Course module or unit outcomes are stated.',
-    'Course resources are clearly identified and easy to access.',
-    'Terms and labels are consistent throughout the course shell.',
-    'Course offers multiple opportunities for students to gain information (e.g., due dates in Course Content, Course Calendar, Assignment Listing).',
-    'Textbooks/Ebooks/Online Tools work seamlessly with LMS.',
-    'Course is fully prepared and available to students by the first day of the term.'
-  ]},
-  { id:'access', label:'Accessibility', max:6, indicators:[
-    'Course accessibility is addressed (videos are captioned, color use is ADA-appropriate, other visual elements meet ADA standards).',
-    'Course design adheres to universal design standards.'
-  ]},
-  { id:'outcomes', label:'Learning outcomes', max:33, indicators:[
-    'Instructor facilitates critical thinking.',
-    'Learning outcomes build upon existing knowledge.',
-    'Instructor recognizes and acknowledges excellence in student work.',
-    'Course learning outcomes are aligned with program and/or institutional learning outcomes.',
-    'Course learning outcomes are reviewed and updated on a regular basis.',
-    'Course learning outcomes are stated in syllabus (or in the beginning of modules).',
-    'Course learning outcomes and content are continuously evaluated for alignment.',
-    'Course learning outcomes are clearly defined and measurable.',
-    'There are clear links between learning objectives and outcomes with activities and assessment.',
-    'Course learning outcomes are related to the appropriate level of learning.',
-    'All learning outcomes for the course are assessed.'
-  ]},
-  { id:'content', label:'Course content', max:27, indicators:[
-    'Course content covers all course objectives/competencies.',
-    'Online activities and assignments are written with explicit instructions for how to participate, when submissions are expected, and how activities are assessed.',
-    'Interactive group discussions are written with explicit instructions for how to participate, when submissions are expected, and how activities are assessed.',
-    'Course offers opportunities for learners to engage in relevant activities that draw from authentic experiences.',
-    'Course activities are appropriately paced and evenly distributed across modules.',
-    'A course orientation familiarizes students with the LMS, course navigation, and student support services.',
-    'Instructor provides information regarding computer, hardware, and software requirements, and where to receive technical assistance.',
-    'Instructor includes netiquette behavior guidelines to enhance inclusion.',
-    'Instructor is aware of and obeys copyright law in using and posting materials.'
-  ]},
-  { id:'assignments', label:'Assignments', max:21, indicators:[
-    'Assignments are directly related to course/lecture learning objectives.',
-    'Assignments are meaningful, purposeful, and relevant to learning outcomes.',
-    'Assignments include grading rubrics with clear expectations.',
-    'Instructor provides a variety of assignment types to enable different learners to demonstrate skills.',
-    'Instructor structures learning activities to promote student-to-student interactions.',
-    'Assignments promote critical thinking and problem solving.',
-    'A schedule of assignments is provided that includes due dates and time frames.'
-  ]},
-  { id:'instructor', label:'Instructor role', max:45, indicators:[
-    'Instructor provides a personalized bio and welcome statement in text or video format.',
-    'At a minimum, the instructor checks the course five days out of seven.',
-    'Instructor utilizes an accessible online grade book and posts grades promptly.',
-    'Instructor demonstrates concern for student issues/outcomes.',
-    'Instructor sets clear expectations for students regarding course learning outcomes.',
-    'Instructor provides clear information about expectations of academic integrity and plagiarism.',
-    'Instructor is flexible and responsive to student needs, revising course directives as needed.',
-    'Instructor resolves course-related issues in a timely manner.',
-    'Instructor proactively addresses problems as they emerge and is responsive to student concerns.',
-    'Instructor consistently demonstrates enthusiasm for the course subject matter.',
-    'Instructor provides encouraging feedback.',
-    'Instructor uses strategies that encourage students to be self-directed and take responsibility for their learning.',
-    'Instructor demonstrates respect for students.',
-    'Instructor finds opportunities for student affirmation.',
-    'Instructor uses LMS tools effectively to facilitate the learning experience.'
-  ]},
-  { id:'discussion', label:'Discussion & engagement', max:24, indicators:[
-    'Discussions are meaningful, aligned with course learning outcomes, and provide opportunities for critical thinking.',
-    'Instructor provides clear explanation of how class discussion will be used.',
-    'Instructor clearly states expectations for participation in discussion forums and other class communication.',
-    'Instructor promotes students\' awareness of other perceptions or perspectives.',
-    'Instructor demonstrates presence by engaging actively and frequently throughout the course.',
-    'Instructor posts critical, reflective questions for discussion forums.',
-    'Students are expected to post discussion responses and interact with classmates and the instructor.',
-    'Class discussion boards are designed to facilitate student-to-student interactions.'
-  ]},
-  { id:'community', label:'Building community', max:36, indicators:[
-    'Instructor provides a space for students to post an introduction and share appropriate parts of their personal life.',
-    'Instructor develops an appropriate personal conversation style for the audience.',
-    'Instructor creates a safe climate for collaboration.',
-    'Instructor creates an inclusive, supportive, and engaging climate, using learners\' names often.',
-    'Instructor creates a positive, motivating, and encouraging environment.',
-    'Instructor encourages students to be candid, yet respectful of others.',
-    'Instructor uses inclusive language such as "we," "you," and "our."',
-    'Instructor provides activities/assignments that foster student interaction.',
-    'Instructor provides clear and specific course expectations for community in assignments/discussion forums.',
-    'Instructor facilitates positive communication with students.',
-    'Instructor creates and promotes respectful interaction.',
-    'Expectations are communicated for participation or engagement with peers.'
-  ]},
-  { id:'communication', label:'Communication', max:45, indicators:[
-    'Instructor provides ongoing and meaningful communication.',
-    'Instructor models effective communication techniques and netiquette.',
-    'Instructor uses a positive, supportive tone in all communications.',
-    'Instructor provides clear, useful, and constructive feedback to students.',
-    'Instructor provides prompt feedback.',
-    'Instructor specifies times when students can expect instructor feedback.',
-    'Instructor messages are clear and appropriate.',
-    'Instructor sends an introductory welcome email message.',
-    'Instructor uses announcements effectively and appropriately.',
-    'Instructor communicates to students what they should know in order to focus on learning.',
-    'Instructor promptly returns phone calls and emails in compliance with the course communication policy.',
-    'Instructor shows a strong desire to assist students in performing successfully.',
-    'Instructor informs students when out of contact and provides an alternative for assistance.',
-    'Instructor encourages students to contact instructor when questions arise.',
-    'Instructor requires college-level writing and communication in all written work and course participation.'
-  ]},
-  { id:'improvement', label:'Course improvement', max:15, indicators:[
-    'Instructor continuously evaluates the effectiveness and content of their online course.',
-    'Instructor frequently reviews course design.',
-    'Student feedback for course improvement is encouraged and requested.',
-    'An anonymous course survey is available to encourage student feedback.',
-    'Instructor provides opportunities for reflection at the end of course for course improvement.'
-  ]}
+const SECTIONS = [
+  {
+    id: 'essential',
+    label: 'Essential Design',
+    max: 40,
+    note: 'These items evaluate fundamental course components. This section can be completed before or after the course has run.',
+    indicators: [
+      'Learning objectives and/or outcomes are specific, measurable, and clearly defined.',
+      'Course lists all required learning materials, including technology tools.',
+      'Course provides office hours, communication preferences, and response times.',
+      'Course provides technical support resources and help for common technical issues.',
+      'Course includes step-by-step guides or tutorials for all required technologies.',
+      'Course defines grading policies, academic integrity expectations, and late policies.',
+      'Course provides an accessibility statement and steps to request accommodations.',
+      'Course includes information for relevant learner support and other services.',
+      'Course includes a course schedule with due dates for all assignments and activities.',
+      'Course includes an introductory discussion and guidelines for student interactions.',
+      'Course site navigation and layout are clear and consistent.',
+      'Videos and other multimedia content are of appropriate quality and length.',
+      'Course content is up-to-date, relevant, and tied to specific learning objectives.',
+      'Course site provides an organized gradebook that includes all assessments.',
+      'Course incorporates formative, low-stakes assessments for frequent engagement.',
+      'Course provides a scaffolded approach for summative assessments.',
+      'All modules, assignments, and activities include clear and detailed instructions.',
+      'Course includes rubrics for all assignments and assessments.',
+      'Course workload is balanced and appropriate for the discipline and course level.',
+      'Course materials are free of broken links, spelling errors, and incorrect information.'
+    ]
+  },
+  {
+    id: 'advanced',
+    label: 'Advanced Design',
+    max: 30,
+    note: 'These items encourage enhancements beyond the essentials. This section can be completed at any stage to elevate course quality.',
+    indicators: [
+      'Course learning objectives and/or outcomes use learner-centered language.',
+      'Course includes a pre-course technology checklist and online readiness quiz.',
+      'Course includes an orientation module, video, or guide to navigating the course.',
+      'Course includes explicit guidelines for using generative AI.',
+      'Course uses exclusively low- or no-cost materials.',
+      'Course provides multiple pathways for learners to meet learning objectives.',
+      'Content includes examples that represent a range of learner backgrounds.',
+      'Course includes an online forum for muddiest points or questions about the course.',
+      'Course incorporates adaptive learning strategies to personalize learning.',
+      'Text materials meet accessibility and Universal Design standards.',
+      'Videos and other multimedia content meet accessibility standards.',
+      'Course includes ways for learners to contribute meaningfully to course content.',
+      'Course includes model deliverables for summative assessments.',
+      'Course includes assessments with practical, real-world applications.',
+      'Course supports learner metacognition through periodic self-reflection activities.'
+    ]
+  },
+  {
+    id: 'delivery',
+    label: 'Course Delivery',
+    max: 30,
+    note: 'These items assess how the course was facilitated. This section should only be completed after the course has been taught.',
+    indicators: [
+      'Instructor provides a personal introduction to the course.',
+      'Instructor releases modules and content in the course site in a timely manner.',
+      'Instructor posts regular and relevant announcements on the course site.',
+      'Instructor contributes meaningfully to online activities and discussions.',
+      'Instructor provides specific and targeted feedback on assignments.',
+      'Instructor provides feedback and grades on assessments in a timely manner.',
+      'Instructor actively engages with learners who show signs of struggle in the course.',
+      'Instructor uses supportive language in all feedback and communications.',
+      'Instructor encourages or incentivizes learners to participate in office hours.',
+      'Instructor responds to student communications and inquiries in a timely manner.',
+      'Instructor provides end-of-module summaries based upon learner contributions.',
+      'Instructor encourages learner-to-learner engagement in online activities.',
+      'Instructor adjusts content, assignments, and dates in response to learner needs.',
+      'Instructor solicits learner feedback about the course at multiple points in the term.',
+      'Instructor incorporates personal examples to supplement course content.'
+    ]
+  }
 ];
 
-// Indicators that require observed teaching behavior — cannot be inferred from a syllabus
-const SELF_REPORT_INDICATORS = new Set([
-  'instructor_1','instructor_2','instructor_3','instructor_4','instructor_6','instructor_7',
-  'instructor_8','instructor_9','instructor_10','instructor_11','instructor_12','instructor_13',
-  'discussion_4','discussion_5','community_1','community_2','community_3','community_4',
-  'community_5','communication_0','communication_1','communication_2','communication_3',
-  'communication_4','communication_5','communication_10','communication_11','communication_12',
-  'improvement_0','improvement_1'
-]);
-
 let scores = {};
-let rationales = {};
-let aiScored = new Set();
-let currentCat = 0;
-let syllabusText = '';
-let assignmentText = '';
+let notes = {};
+let helpCache = {};
+let currentSection = 0;
 
-const key = (catId, i) => `${catId}_${i}`;
+const key = (sIdx, iIdx) => `${sIdx}_${iIdx}`;
 
 function showToast(msg) {
   const t = document.getElementById('toast');
@@ -714,52 +341,82 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2500);
 }
 
-function setStatus(elId, msg, type) {
-  const el = document.getElementById(elId);
-  el.className = 'status ' + (msg ? 'visible status-' + type : '');
+function setStatus(id, msg, type) {
+  const el = document.getElementById(id);
+  el.className = 'status' + (msg ? ' show status-' + type : '');
   el.innerHTML = msg || '';
 }
 
-async function runAutoScore() {
-  syllabusText = document.getElementById('syllabus-input').value.trim();
-  assignmentText = document.getElementById('assignment-input').value.trim();
-  if (!syllabusText) {
-    setStatus('intro-status', 'Please paste a syllabus before running auto-score.', 'error');
-    return;
-  }
-  const btn = document.getElementById('auto-btn');
-  btn.disabled = true;
-  btn.textContent = 'Analyzing…';
-  setStatus('intro-status', 'Analyzing your materials — this usually takes 15–20 seconds…', 'loading');
-
-  const allIndicators = CATEGORIES.map(c =>
-    c.indicators.map((ind, i) => `[${c.id}_${i}] ${ind}`).join('\n')
-  ).join('\n');
-
-  const prompt = `You are reviewing a college course using the OLC QCTIP (Quality Course Teaching and Instructional Practice) scorecard.
-
-Scoring scale:
-0 = Deficient (absent or not evident)
-1 = Developing (partially present, needs significant work)
-2 = Accomplished (clearly present and meets the standard)
-3 = Exemplary (exceeds the standard with notable intentionality)
-
-SYLLABUS PROVIDED:
-${syllabusText}
-
-${assignmentText ? 'SAMPLE ASSIGNMENT PROVIDED:\n' + assignmentText + '\n' : ''}
-
-TASK: Score each indicator below using 0–3. Use -1 ONLY for indicators that require observed teaching behavior that cannot be verified from a syllabus or written materials (e.g., whether the instructor actually checks the course five days a week, whether they provide encouraging feedback in practice). Do not use -1 simply because you are uncertain — make a reasonable inference from what you can see.
-
-Return ONLY valid JSON with no markdown fences, no preamble:
-{
-  "scores": { "catid_index": integer },
-  "rationales": { "catid_index": "one concise sentence" },
-  "impression": "2–3 sentence overall impression of the course materials"
+function startReview() {
+  buildReview();
+  goToStep('step-review');
+  document.getElementById('prog-wrap').style.display = 'block';
 }
 
-Indicators:
-${allIndicators}`;
+function buildReview() {
+  const container = document.getElementById('section-panels');
+  container.innerHTML = '';
+
+  SECTIONS.forEach((sec, si) => {
+    const panel = document.createElement('div');
+    panel.id = 'panel-' + si;
+    panel.className = 'section-panel' + (si === 0 ? ' active' : '');
+
+    let html = `<div class="section-heading">
+      <span class="section-title">${sec.label}</span>
+      <span class="section-max">out of ${sec.max} points</span>
+    </div>
+    <div class="section-note">${sec.note}</div>`;
+
+    sec.indicators.forEach((ind, ii) => {
+      const k = key(si, ii);
+      const sc = scores[k];
+      html += `<div class="indicator" id="ind-${k}">
+        <div class="indicator-header">
+          <span class="indicator-num">${ii + 1}</span>
+          <span class="indicator-text">${ind}</span>
+          <button class="help-btn" onclick="toggleHelp('${k}', ${si}, ${ii})" aria-label="What does this mean?">&#x2753; What does this mean?</button>
+        </div>
+        <div class="help-box" id="help-${k}"></div>
+        <div class="score-row">
+          ${[0,1,2].map(n => `<button class="score-btn ${sc === n ? 'sel-' + n : ''}" onclick="setScore('${k}', ${n}, ${si})" aria-label="Score ${n}">${n}</button>`).join('')}
+          <span class="score-legend">0 = developing &nbsp;·&nbsp; 1 = accomplished &nbsp;·&nbsp; 2 = exemplary</span>
+        </div>
+        <textarea class="notes-field" id="notes-${k}" placeholder="Evidence or notes (optional)…" rows="1" oninput="saveNotes('${k}')">${notes[k] || ''}</textarea>
+      </div>`;
+    });
+
+    html += `<div class="subtotal">
+      <span class="subtotal-label">Subtotal</span>
+      <span class="subtotal-val" id="sub-${si}">0 / ${sec.max}</span>
+    </div>
+    <div class="nav-footer">
+      ${si > 0 ? `<button class="btn btn-secondary" onclick="switchSection(${si - 1})">&#8592; Previous</button>` : '<span></span>'}
+      ${si < SECTIONS.length - 1
+        ? `<button class="btn btn-primary" onclick="switchSection(${si + 1})">Next &#8594;</button>`
+        : `<button class="btn btn-navy" onclick="goToSummary()">View summary &#8594;</button>`}
+    </div>`;
+
+    panel.innerHTML = html;
+    container.appendChild(panel);
+  });
+
+  updateAllSubtotals();
+  updateProgress();
+}
+
+async function toggleHelp(k, si, ii) {
+  const box = document.getElementById('help-' + k);
+  if (box.classList.contains('show')) {
+    box.classList.remove('show');
+    return;
+  }
+  box.classList.add('show');
+  if (helpCache[k]) { box.innerHTML = helpCache[k]; return; }
+
+  const ind = SECTIONS[si].indicators[ii];
+  const section = SECTIONS[si].label;
+  box.innerHTML = '<span class="help-loading">Loading guidance…</span>';
 
   try {
     const resp = await fetch('https://api.anthropic.com/v1/messages', {
@@ -768,173 +425,93 @@ ${allIndicators}`;
       body: JSON.stringify({
         model: 'claude-sonnet-4-6',
         max_tokens: 1000,
-        messages: [{ role: 'user', content: prompt }]
+        messages: [{
+          role: 'user',
+          content: `You are helping a college adjunct instructor self-assess their online course using the OLC Course Review Scorecard.
+
+Section: ${section}
+Indicator: "${ind}"
+
+Write a brief, plain-language explanation (3–5 sentences) of what this indicator means in practice for a community college online course. Then give one concrete example of what each score level looks like:
+
+- 0 (Developing): [one sentence example of what's missing or insufficient]
+- 1 (Accomplished): [one sentence example of what adequately meets this]  
+- 2 (Exemplary): [one sentence example of what thoroughly meets this]
+
+Keep the tone collegial and helpful, not evaluative. No preamble.`
+        }]
       })
     });
     const data = await resp.json();
     if (data.error) throw new Error(data.error.message);
-    const raw = data.content.map(b => b.text || '').join('');
-    const parsed = JSON.parse(raw.replace(/```json|```/g,'').trim());
-
-    Object.entries(parsed.scores || {}).forEach(([k, v]) => {
-      if (v >= 0) { scores[k] = v; aiScored.add(k); }
-    });
-    Object.entries(parsed.rationales || {}).forEach(([k, v]) => { rationales[k] = v; });
-
-    const scoredN = Object.values(parsed.scores || {}).filter(v => v >= 0).length;
-    const flaggedN = Object.values(parsed.scores || {}).filter(v => v < 0).length;
-
-    buildReview();
-    goToStep('step-review');
-
-    const banner = document.getElementById('ai-banner');
-    banner.style.display = 'block';
-    banner.innerHTML = `<strong>AI scored ${scoredN} indicators</strong> from your materials. ${flaggedN} were flagged for self-report (marked in amber below).${parsed.impression ? ' <em>' + parsed.impression + '</em>' : ''}`;
-
-    setStatus('intro-status', '', '');
+    const text = data.content.map(b => b.text || '').join('');
+    helpCache[k] = text;
+    box.innerHTML = text.replace(/\n/g, '<br>');
   } catch(e) {
-    setStatus('intro-status', 'Auto-score failed: ' + e.message + '. You can proceed manually.', 'error');
-    btn.disabled = false;
-    btn.textContent = '✨ Auto-score with AI';
+    box.innerHTML = 'Could not load guidance. Please score based on your own judgment.';
   }
 }
 
-function skipToManual() {
-  syllabusText = document.getElementById('syllabus-input').value.trim();
-  assignmentText = document.getElementById('assignment-input').value.trim();
-  buildReview();
-  goToStep('step-review');
-}
-
-function buildReview() {
-  const nav = document.getElementById('section-nav');
-  const panels = document.getElementById('cat-panels');
-  nav.innerHTML = '';
-  panels.innerHTML = '';
-
-  CATEGORIES.forEach((cat, ci) => {
-    const chip = document.createElement('button');
-    chip.id = 'chip-' + cat.id;
-    chip.className = 'nav-chip' + (ci === 0 ? ' active' : '');
-    chip.textContent = cat.label;
-    chip.onclick = () => switchCat(ci);
-    nav.appendChild(chip);
-
-    const panel = document.createElement('div');
-    panel.id = 'panel-' + cat.id;
-    panel.className = 'cat-panel' + (ci === 0 ? ' active' : '');
-
-    let html = `<div class="cat-header">
-      <span class="cat-title">${cat.label}</span>
-      <span class="cat-max">out of ${cat.max} points</span>
-    </div>`;
-
-    cat.indicators.forEach((ind, ii) => {
-      const k = key(cat.id, ii);
-      const isAI = aiScored.has(k);
-      const isSelf = !isAI && syllabusText;
-      const rat = rationales[k] || '';
-      const sc = scores[k];
-
-      const tag = isAI
-        ? '<span class="tag tag-ai">AI scored</span>'
-        : (isSelf ? '<span class="tag tag-self">self-report</span>' : '');
-
-      const scoreBtns = [0,1,2,3].map(n =>
-        `<button class="score-btn ${sc === n ? 'sel-' + n : ''}" onclick="setScore('${k}', ${n}, '${cat.id}')" aria-label="Score ${n}">${n}</button>`
-      ).join('');
-
-      html += `<div class="indicator" id="ind-${k}">
-        <div class="indicator-top">
-          <span class="indicator-num">${ii+1}</span>
-          <span class="indicator-text">${ind}${tag}</span>
-        </div>
-        <div class="score-row">
-          ${scoreBtns}
-          <span class="score-legend">0 deficient · 1 developing · 2 accomplished · 3 exemplary</span>
-        </div>
-        ${rat ? `<div class="rationale" id="rat-${k}">${rat}</div>` : ''}
-        <textarea class="notes-field" id="notes-${k}" placeholder="Notes (optional)…" rows="1"></textarea>
-      </div>`;
-    });
-
-    html += `<div class="subtotal">
-      <span class="subtotal-label">Subtotal</span>
-      <span class="subtotal-val" id="sub-${cat.id}">0 / ${cat.max}</span>
-    </div>
-    <div class="nav-footer">
-      ${ci > 0 ? `<button class="btn btn-secondary" onclick="switchCat(${ci-1})">&#8592; Previous</button>` : '<span></span>'}
-      ${ci < CATEGORIES.length - 1
-        ? `<button class="btn btn-primary" onclick="switchCat(${ci+1})">Next &#8594;</button>`
-        : `<button class="btn btn-navy" onclick="goToSummary()">View summary &#8594;</button>`}
-    </div>`;
-
-    panel.innerHTML = html;
-    panels.appendChild(panel);
-  });
-
-  updateAllSubtotals();
-  updateProgress();
-  document.getElementById('progress-strip').classList.add('visible');
-}
-
-function setScore(k, n, catId) {
+function setScore(k, n, si) {
   scores[k] = n;
   const ind = document.getElementById('ind-' + k);
   ind.querySelectorAll('.score-btn').forEach((btn, i) => {
     btn.className = 'score-btn' + (i === n ? ' sel-' + n : '');
   });
-  updateSubtotal(catId);
+  updateSubtotal(si);
   updateProgress();
-  updateChip(catId);
+  updateTab(si);
 }
 
-function getSubtotal(catId) {
-  const cat = CATEGORIES.find(c => c.id === catId);
-  return cat.indicators.reduce((sum, _, ii) => sum + (scores[key(catId, ii)] || 0), 0);
+function saveNotes(k) {
+  const el = document.getElementById('notes-' + k);
+  if (el) notes[k] = el.value;
 }
 
-function updateSubtotal(catId) {
-  const cat = CATEGORIES.find(c => c.id === catId);
-  const sub = getSubtotal(catId);
-  const el = document.getElementById('sub-' + catId);
-  if (el) el.textContent = sub + ' / ' + cat.max;
+function getSubtotal(si) {
+  return SECTIONS[si].indicators.reduce((sum, _, ii) => sum + (scores[key(si, ii)] || 0), 0);
 }
 
-function updateAllSubtotals() {
-  CATEGORIES.forEach(cat => updateSubtotal(cat.id));
+function updateSubtotal(si) {
+  const el = document.getElementById('sub-' + si);
+  if (el) el.textContent = getSubtotal(si) + ' / ' + SECTIONS[si].max;
 }
 
-function getTotal() {
-  return CATEGORIES.reduce((sum, cat) => sum + getSubtotal(cat.id), 0);
-}
+function updateAllSubtotals() { SECTIONS.forEach((_, i) => updateSubtotal(i)); }
 
-function updateChip(catId) {
-  const cat = CATEGORIES.find(c => c.id === catId);
-  const anyScored = cat.indicators.some((_, ii) => scores[key(catId, ii)] !== undefined);
-  const chip = document.getElementById('chip-' + catId);
-  if (!chip) return;
-  const isActive = chip.classList.contains('active');
-  chip.className = 'nav-chip' + (anyScored ? ' complete' : '') + (isActive ? ' active' : '');
+function getTotal() { return SECTIONS.reduce((sum, _, i) => sum + getSubtotal(i), 0); }
+
+function updateTab(si) {
+  const sec = SECTIONS[si];
+  const anyScored = sec.indicators.some((_, ii) => scores[key(si, ii)] !== undefined);
+  const tabs = ['tab-essential', 'tab-advanced', 'tab-delivery'];
+  const tab = document.getElementById(tabs[si]);
+  if (!tab) return;
+  const isActive = tab.classList.contains('active');
+  tab.className = 'section-tab' + (anyScored ? ' complete' : '') + (isActive ? ' active' : '');
 }
 
 function updateProgress() {
-  const touched = CATEGORIES.filter(cat =>
-    cat.indicators.some((_, ii) => scores[key(cat.id, ii)] !== undefined)
-  ).length;
-  const pct = Math.round((touched / CATEGORIES.length) * 100);
-  document.getElementById('progress-bar').style.width = pct + '%';
-  document.getElementById('progress-label').textContent = touched + ' of 10 sections reviewed';
-  document.getElementById('progress-score').textContent = getTotal() + ' / 291';
+  const total = getTotal();
+  const scored = Object.keys(scores).length;
+  const totalIndicators = SECTIONS.reduce((s, sec) => s + sec.indicators.length, 0);
+  const pct = Math.round((scored / totalIndicators) * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-label').textContent = scored + ' of ' + totalIndicators + ' indicators scored';
+  document.getElementById('prog-score').textContent = total + ' / 100';
 }
 
-function switchCat(ci) {
-  currentCat = ci;
-  CATEGORIES.forEach((cat, i) => {
-    document.getElementById('panel-' + cat.id).className = 'cat-panel' + (i === ci ? ' active' : '');
-    const chip = document.getElementById('chip-' + cat.id);
-    const anyScored = cat.indicators.some((_, ii) => scores[key(cat.id, ii)] !== undefined);
-    chip.className = 'nav-chip' + (anyScored ? ' complete' : '') + (i === ci ? ' active' : '');
+function switchSection(si) {
+  currentSection = si;
+  const tabs = ['tab-essential', 'tab-advanced', 'tab-delivery'];
+  SECTIONS.forEach((sec, i) => {
+    const panel = document.getElementById('panel-' + i);
+    if (panel) panel.className = 'section-panel' + (i === si ? ' active' : '');
+    const tab = document.getElementById(tabs[i]);
+    if (tab) {
+      const anyScored = sec.indicators.some((_, ii) => scores[key(i, ii)] !== undefined);
+      tab.className = 'section-tab' + (anyScored ? ' complete' : '') + (i === si ? ' active' : '');
+    }
   });
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -951,133 +528,226 @@ function goToSummary() {
 }
 
 function buildSummary() {
-  let total = 0;
-  let complete = 0;
-  const grid = document.getElementById('summary-grid');
+  const total = getTotal();
+  const pct = Math.round((total / 100) * 100);
+  const completed = SECTIONS.filter((sec, i) => sec.indicators.some((_, ii) => scores[key(i, ii)] !== undefined)).length;
+
+  document.getElementById('sum-total').textContent = total + ' / 100';
+  document.getElementById('sum-pct').textContent = pct + '%';
+  document.getElementById('sum-sections').textContent = completed + ' / 3';
+
+  const grid = document.getElementById('sum-grid');
   grid.innerHTML = '';
-
-  CATEGORIES.forEach(cat => {
-    const sub = getSubtotal(cat.id);
-    total += sub;
-    const anyScored = cat.indicators.some((_, ii) => scores[key(cat.id, ii)] !== undefined);
-    if (anyScored) complete++;
-
-    const pct = Math.round((sub / cat.max) * 100);
-    const fillClass = pct >= 80 ? 'fill-high' : pct >= 55 ? 'fill-mid' : 'fill-low';
-
+  SECTIONS.forEach((sec, i) => {
+    const sub = getSubtotal(i);
+    const p = Math.round((sub / sec.max) * 100);
+    const barClass = p >= 75 ? 'bar-high' : p >= 50 ? 'bar-mid' : 'bar-low';
     grid.innerHTML += `<div class="summary-card">
-      <div class="summary-card-name">${cat.label}</div>
-      <div class="summary-card-score">${sub} <span class="summary-card-max">/ ${cat.max}</span></div>
-      <div class="summary-card-bar"><div class="summary-card-fill ${fillClass}" style="width:${pct}%"></div></div>
+      <div class="summary-card-name">${sec.label}</div>
+      <div class="summary-card-score">${sub} <span class="summary-card-max">/ ${sec.max}</span></div>
+      <div class="summary-card-bar"><div class="${barClass}" style="width:${p}%"></div></div>
     </div>`;
   });
-
-  const totalPct = Math.round((total / 291) * 100);
-  document.getElementById('total-score').textContent = total + ' / 291';
-  document.getElementById('total-pct').textContent = totalPct + '%';
-  document.getElementById('sections-complete').textContent = complete + ' / 10';
 }
 
-async function generateNarrative() {
-  setStatus('narrative-status', 'Generating narrative summary…', 'loading');
+async function exportDocx() {
+  const btn = document.getElementById('export-btn');
+  btn.disabled = true;
+  btn.textContent = 'Building document…';
+  setStatus('export-status', 'Generating your Word document…', 'loading');
 
-  let scoreLines = '';
-  let noteLines = '';
-  CATEGORIES.forEach(cat => {
-    const sub = getSubtotal(cat.id);
-    scoreLines += `${cat.label}: ${sub}/${cat.max}\n`;
-    cat.indicators.forEach((ind, ii) => {
-      const k = key(cat.id, ii);
-      const n = document.getElementById('notes-' + k);
-      if (n && n.value.trim()) {
-        noteLines += `(${cat.label} #${ii+1}) ${ind} [score: ${scores[k] ?? 0}]: ${n.value.trim()}\n`;
-      }
-    });
-  });
-
+  const name = document.getElementById('f-name').value.trim() || 'Instructor';
+  const course = document.getElementById('f-course').value.trim() || 'Course';
+  const term = document.getElementById('f-term').value.trim();
+  const strengths = document.getElementById('sum-strengths').value.trim();
+  const improve = document.getElementById('sum-improve').value.trim();
+  const plan = document.getElementById('sum-plan').value.trim();
   const total = getTotal();
-  const pct = Math.round((total / 291) * 100);
-
-  const prompt = `Write a professional course quality review narrative for a college instructor based on their QCTIP scorecard.
-
-Scores by section:
-${scoreLines}
-Total: ${total}/291 (${pct}%)
-
-${noteLines ? 'Reviewer notes:\n' + noteLines : ''}
-
-Write 3–4 paragraphs:
-1. Overall quality summary, naming the score and percentage
-2. Two or three genuine strengths (reference specific sections)
-3. Two or three priority areas for improvement (reference specific sections with lower scores)
-4. Forward-looking closing sentence
-
-Tone: collegial, professional, supportive — peer feedback, not punitive. Be specific, not generic. No bullet points. No phrase "it is important to note."`;
+  const pct = Math.round((total / 100) * 100);
+  const dateStr = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
   try {
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: prompt }]
+    const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
+            AlignmentType, HeadingLevel, BorderStyle, WidthType, ShadingType, VerticalAlign } = docx;
+
+    const border = { style: BorderStyle.SINGLE, size: 1, color: 'CCCCCC' };
+    const borders = { top: border, bottom: border, left: border, right: border };
+    const noBorder = { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' };
+    const noBorders = { top: noBorder, bottom: noBorder, left: noBorder, right: noBorder };
+
+    const makeHeading = (text, level) => new Paragraph({
+      children: [new TextRun({ text, bold: true, size: level === 1 ? 32 : level === 2 ? 26 : 22, font: 'Arial', color: level === 1 ? '1a2744' : level === 2 ? '1d7d74' : '2c2c2a' })],
+      spacing: { before: level === 1 ? 0 : 240, after: 120 }
+    });
+
+    const makeP = (text, opts = {}) => new Paragraph({
+      children: [new TextRun({ text, size: 22, font: 'Arial', color: '2c2c2a', ...opts })],
+      spacing: { after: 80 }
+    });
+
+    const makeScoreRow = (num, indicator, score, note) => {
+      const scoreLabel = score === undefined ? '—' : score === 0 ? '0 – Developing' : score === 1 ? '1 – Accomplished' : '2 – Exemplary';
+      const scoreFill = score === undefined ? 'EEEEEE' : score === 0 ? 'FDECEA' : score === 1 ? 'FEF3E2' : 'EAF5EC';
+      const scoreColor = score === undefined ? '888888' : score === 0 ? 'B83232' : score === 1 ? 'C97B2A' : '2E7D47';
+      const rows = [
+        new TableRow({
+          children: [
+            new TableCell({
+              borders, width: { size: 600, type: WidthType.DXA },
+              margins: { top: 60, bottom: 60, left: 100, right: 100 },
+              verticalAlign: VerticalAlign.CENTER,
+              children: [new Paragraph({ children: [new TextRun({ text: String(num), size: 18, font: 'Arial', color: '888888', bold: true })], alignment: AlignmentType.CENTER })]
+            }),
+            new TableCell({
+              borders, width: { size: 5760, type: WidthType.DXA },
+              margins: { top: 60, bottom: 60, left: 100, right: 100 },
+              children: [new Paragraph({ children: [new TextRun({ text: indicator, size: 20, font: 'Arial', color: '2c2c2a' })] })]
+            }),
+            new TableCell({
+              borders, width: { size: 2000, type: WidthType.DXA },
+              shading: { fill: scoreFill, type: ShadingType.CLEAR },
+              margins: { top: 60, bottom: 60, left: 100, right: 100 },
+              verticalAlign: VerticalAlign.CENTER,
+              children: [new Paragraph({ children: [new TextRun({ text: scoreLabel, size: 18, font: 'Arial', color: scoreColor, bold: true })], alignment: AlignmentType.CENTER })]
+            })
+          ]
+        })
+      ];
+      if (note) {
+        rows.push(new TableRow({
+          children: [
+            new TableCell({ borders, width: { size: 600, type: WidthType.DXA }, children: [new Paragraph({ children: [] })] }),
+            new TableCell({
+              borders, width: { size: 7760, type: WidthType.DXA }, columnSpan: 2,
+              shading: { fill: 'F7F7F6', type: ShadingType.CLEAR },
+              margins: { top: 40, bottom: 60, left: 100, right: 100 },
+              children: [new Paragraph({ children: [new TextRun({ text: 'Notes: ' + note, size: 18, font: 'Arial', color: '5c5c58', italics: true })] })]
+            })
+          ]
+        }));
+      }
+      return rows;
+    };
+
+    const headerRow = (label, max) => new TableRow({
+      children: [
+        new TableCell({
+          borders, columnSpan: 2, width: { size: 6360, type: WidthType.DXA },
+          shading: { fill: '1a2744', type: ShadingType.CLEAR },
+          margins: { top: 80, bottom: 80, left: 120, right: 120 },
+          children: [new Paragraph({ children: [new TextRun({ text: label, size: 22, font: 'Arial', color: 'FFFFFF', bold: true })] })]
+        }),
+        new TableCell({
+          borders, width: { size: 2000, type: WidthType.DXA },
+          shading: { fill: '1a2744', type: ShadingType.CLEAR },
+          margins: { top: 80, bottom: 80, left: 120, right: 120 },
+          children: [new Paragraph({ children: [new TextRun({ text: 'out of ' + max + ' pts', size: 18, font: 'Arial', color: 'FFFFFF' })], alignment: AlignmentType.CENTER })]
+        })
+      ]
+    });
+
+    const subtotalRow = (si) => {
+      const sub = getSubtotal(si);
+      const max = SECTIONS[si].max;
+      return new TableRow({
+        children: [
+          new TableCell({
+            borders, columnSpan: 2, width: { size: 6360, type: WidthType.DXA },
+            shading: { fill: 'EFEFED', type: ShadingType.CLEAR },
+            margins: { top: 60, bottom: 60, left: 120, right: 120 },
+            children: [new Paragraph({ children: [new TextRun({ text: 'Subtotal', size: 20, font: 'Arial', color: '5c5c58', bold: true })] })]
+          }),
+          new TableCell({
+            borders, width: { size: 2000, type: WidthType.DXA },
+            shading: { fill: 'EFEFED', type: ShadingType.CLEAR },
+            margins: { top: 60, bottom: 60, left: 120, right: 120 },
+            children: [new Paragraph({ children: [new TextRun({ text: sub + ' / ' + max, size: 20, font: 'Arial', color: '1a2744', bold: true })], alignment: AlignmentType.CENTER })]
+          })
+        ]
+      });
+    };
+
+    // Build table rows
+    const allRows = [];
+    SECTIONS.forEach((sec, si) => {
+      allRows.push(headerRow(sec.label, sec.max));
+      sec.indicators.forEach((ind, ii) => {
+        const k = key(si, ii);
+        const noteVal = notes[k] || (document.getElementById('notes-' + k) ? document.getElementById('notes-' + k).value.trim() : '');
+        makeScoreRow(ii + 1, ind, scores[k], noteVal).forEach(r => allRows.push(r));
+      });
+      allRows.push(subtotalRow(si));
+    });
+
+    // Total row
+    allRows.push(new TableRow({
+      children: [
+        new TableCell({
+          borders, columnSpan: 2, width: { size: 6360, type: WidthType.DXA },
+          shading: { fill: '1d7d74', type: ShadingType.CLEAR },
+          margins: { top: 80, bottom: 80, left: 120, right: 120 },
+          children: [new Paragraph({ children: [new TextRun({ text: 'TOTAL', size: 22, font: 'Arial', color: 'FFFFFF', bold: true })] })]
+        }),
+        new TableCell({
+          borders, width: { size: 2000, type: WidthType.DXA },
+          shading: { fill: '1d7d74', type: ShadingType.CLEAR },
+          margins: { top: 80, bottom: 80, left: 120, right: 120 },
+          children: [new Paragraph({ children: [new TextRun({ text: total + ' / 100  (' + pct + '%)', size: 22, font: 'Arial', color: 'FFFFFF', bold: true })], alignment: AlignmentType.CENTER })]
+        })
+      ]
+    }));
+
+    const narrativeSection = (label, content) => [
+      makeHeading(label, 2),
+      new Paragraph({
+        children: [new TextRun({ text: content || '(not provided)', size: 22, font: 'Arial', color: content ? '2c2c2a' : '9e9e98', italics: !content })],
+        spacing: { after: 160 }
       })
+    ];
+
+    const doc = new Document({
+      sections: [{
+        properties: {
+          page: { size: { width: 12240, height: 15840 }, margin: { top: 1080, right: 1080, bottom: 1080, left: 1080 } }
+        },
+        children: [
+          makeHeading('OLC Course Review Scorecard', 1),
+          makeP(course, { bold: true, size: 24 }),
+          makeP(name),
+          makeP(term ? term + '  ·  Completed ' + dateStr : 'Completed ' + dateStr, { color: '9e9e98' }),
+          new Paragraph({ spacing: { after: 240 } }),
+          new Table({
+            width: { size: 8360, type: WidthType.DXA },
+            columnWidths: [600, 5760, 2000],
+            rows: allRows
+          }),
+          new Paragraph({ spacing: { after: 360 } }),
+          makeHeading('Summary', 1),
+          ...narrativeSection('Strengths', strengths),
+          ...narrativeSection('Areas for improvement', improve),
+          ...narrativeSection('Improvement plan', plan),
+        ]
+      }]
     });
-    const data = await resp.json();
-    if (data.error) throw new Error(data.error.message);
-    const text = data.content.map(b => b.text || '').join('');
-    const box = document.getElementById('narrative-box');
-    box.textContent = text;
-    box.classList.remove('placeholder');
-    setStatus('narrative-status', '', '');
+
+    const buffer = await Packer.toBuffer(doc);
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    const safeCourse = course.replace(/[^a-zA-Z0-9]/g, '_').replace(/_+/g, '_').slice(0, 40);
+    a.download = `QCTIP_${safeCourse}_${term || dateStr.replace(/,?\s/g, '_')}.docx`;
+    a.click();
+    URL.revokeObjectURL(url);
+
+    setStatus('export-status', '', '');
+    showToast('Document downloaded');
   } catch(e) {
-    setStatus('narrative-status', 'Narrative generation failed: ' + e.message, 'error');
+    setStatus('export-status', 'Export failed: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '&#8595; Download Word doc';
   }
-}
-
-function buildExportText() {
-  let out = 'QCTIP Scorecard — Quality Course Teaching and Instructional Practice\n';
-  out += 'OLC Quality Scorecard Suite\n';
-  out += new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' }) + '\n';
-  out += '='.repeat(60) + '\n\n';
-
-  CATEGORIES.forEach(cat => {
-    out += cat.label.toUpperCase() + ' (' + cat.max + ' points)\n';
-    out += '-'.repeat(40) + '\n';
-    cat.indicators.forEach((ind, ii) => {
-      const k = key(cat.id, ii);
-      const sc = scores[k] !== undefined ? scores[k] : '—';
-      const n = document.getElementById('notes-' + k);
-      const note = n && n.value.trim() ? '\n   Note: ' + n.value.trim() : '';
-      out += `  [${sc}] ${ind}${note}\n`;
-    });
-    out += `  Subtotal: ${getSubtotal(cat.id)} / ${cat.max}\n\n`;
-  });
-
-  out += '='.repeat(60) + '\n';
-  out += `TOTAL: ${getTotal()} / 291 (${Math.round((getTotal()/291)*100)}%)\n\n`;
-
-  const narr = document.getElementById('narrative-box');
-  if (narr && !narr.classList.contains('placeholder')) {
-    out += 'NARRATIVE SUMMARY\n' + '-'.repeat(40) + '\n' + narr.textContent + '\n';
-  }
-  return out;
-}
-
-function copyExport() {
-  const text = buildExportText();
-  navigator.clipboard.writeText(text).then(() => showToast('Report copied to clipboard'));
-}
-
-function printReport() {
-  const text = buildExportText();
-  const win = window.open('', '_blank');
-  win.document.write(`<html><head><title>QCTIP Scorecard</title>
-  <style>body{font-family:Georgia,serif;max-width:700px;margin:2rem auto;font-size:14px;line-height:1.7;color:#1a2744;white-space:pre-wrap;}</style>
-  </head><body>${text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</body></html>`);
-  win.document.close();
-  win.print();
 }
 </script>
 </body>
